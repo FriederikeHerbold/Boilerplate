@@ -2,10 +2,24 @@
 <html>
    <head>
      <title>First Webpage</title>
+     <link rel="stylesheet" href="./design/index.css"/>
+     <link rel="stylesheet" media="print" href="./design/print.css"/>
+     <meta charset="UTF-8">
+     <meta name="author" content="Friederike">
     </head>
-    <body>
+<body>
+        <menue>
+          <li><a href="#status">Status</a></li>
+          <li><a href="#tasks">Tasks</a></li>
+        </menue>
+        <header>
+        </header>
+        <main>
+        </main>
+
       <main>
         <menue contenteditable="">
+          <selection id="status">
            <table>
               <tbody>
                  <tr>
@@ -16,13 +30,15 @@
                  </tr>
                </tbody>
            </table>
+         </selection>
+         <selection id="tasks">
            <table>
               <thead>
                  <tr>
-                    <th>Gruppe</th>
-                    <th>Vorname</th>
-                    <th>Name</th>
-                    <th>Studiengang</th>
+                    <th>Gruppe </th>
+                    <th>Vorname </th>
+                    <th>Name </th>
+                    <th>Studiengang </th>
                     <th>Matrikelnummer</th>
                  </tr>
               </thead>
@@ -36,6 +52,7 @@
                  </tr>
               </tbody>
            </table>
+         </selection>
            </menue>
       </main>
      </body>
