@@ -1,25 +1,29 @@
 <DOCTYPE html>
 <html>
    <head>
-     <title>First Webpage</title>
-     <link rel="stylesheet" href="./design/index.css"/>
-     <link rel="stylesheet" media="print" href="./design/print.css"/>
+     <title>Vorlesung Webanwendungen</title>
+     <link rel="stylesheet" href="index.css"/>
+     <link rel="stylesheet" media="print" href="print.css"/>
      <meta charset="UTF-8">
      <meta name="author" content="Friederike">
+     <meta name="deacription" content="Versuchsseite"
     </head>
-<body>
+    <body>
+      <div id="m">
         <menue>
-          <li><a href="#status">Status</a></li>
-          <li><a href="#tasks">Tasks</a></li>
+          <li><a href="http://www.google.de/">link zu google<br></a></li>
+          <li><a href="#status">status</a></li>
+          <li><a href="#tasks">tasks</a></li>
+          <article>nur n kleiner text</article>
         </menue>
-        <header>
-        </header>
-        <main>
-        </main>
-
+      </div>
+      <div id="b">
       <main>
         <menue contenteditable="">
-          <selection id="status">
+          <section id="status">
+            <article>
+              <p>Status<br>Kleine Liste</p>
+            </article>
            <table>
               <tbody>
                  <tr>
@@ -28,10 +32,19 @@
                  <tr>
                   <li tabindex="1" accaskey="2">Element2</li>
                  </tr>
+                 <tr>
+                  <li tabindex="1" accaskey="2">Element3</li>
+                 </tr>
+                 <tr>
+                  <li tabindex="1" accaskey="2">Element4</li>
+                 </tr>
                </tbody>
            </table>
-         </selection>
-         <selection id="tasks">
+         </section>
+         <section id="tasks">
+           <article>
+             <p>Tasks<br>Liste mit zeilen und spalten</p>
+           </article>
            <table>
               <thead>
                  <tr>
@@ -50,10 +63,18 @@
                     <td>hier</td>
                     <td>12345678</td>
                  </tr>
+                 <tr>
+                    <td>2</td>
+                    <td>nochml Ich</td>
+                    <td>auch Egal</td>
+                    <td>ja, hier</td>
+                    <td>87654321</td>
+                 </tr>
               </tbody>
            </table>
-         </selection>
+         </section>
            </menue>
       </main>
+    </div>
      </body>
  </html>
