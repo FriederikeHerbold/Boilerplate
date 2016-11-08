@@ -1,0 +1,110 @@
+body {
+	display: block;
+	background: linear-gradient(to bottom right, #0e1e84, #131521);
+}
+
+menu {
+	display: block;
+	position: absolute;
+	color: #0e1e84;
+    width: 20%;
+    top: 0%;
+    left: 0px;
+    margin: 0px;
+    padding: 0px;
+    bottom: 0px;
+}
+
+menu:hover {
+	color: #84240e;
+}
+
+menu:focus {
+	color: #586847;
+}
+
+menu:active {
+	color: #000000;
+}
+
+main {
+	position: absolute;
+	display: block;
+	background: black;
+	width: 100%;
+	top: 0%;
+}
+
+#statusTable {
+	display: inline-block;
+	background-color: blue;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 100%;
+	width: 80%;
+	transform: translate(100%, 0%);
+	transition: transform 500ms ease-out;
+}
+
+#statusTable:target {
+	transform: translate(0%, 0%);
+	transition: transform 500ms ease-out;
+	left: 20%;
+}
+
+#taskTable {
+	display: inline-block;
+	background-color: blue;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 100%;
+	width: 80%;
+	transform: translate(100%, 0%);
+	transition: transform 500ms ease-out;
+}
+
+#taskTable:target {
+	transform: translate(0%, 0%);
+	transition: transform 500ms ease-out;
+	left: 20%;
+}
+
+
+table {
+	display: inline-block;
+	padding: 5px;
+	margin: 5px;
+	border-spacing: 10px;
+    border-collapse: separate;
+}
+
+tr:hover {
+	color: #ffff99;
+}
+
+th:hover {
+	color: #595931;
+}
+
+.sortW {
+	display: block;
+	color: red;
+	background: black;
+}
+
+.myTable {
+	display: table;
+	table-layout: inherit;
+	color: orange;
+	background: green;
+}
+
+#statusTable {
+	display: block;
+	color: organge;
+	background: green;
+}

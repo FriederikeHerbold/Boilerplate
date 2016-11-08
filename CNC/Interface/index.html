@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Meilenstein I</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../../design/index.css" type="text/css" />
+	</head>
+	<body>
+		<menu class="mymenu">
+				<li><a href="#statusTable">Status Tabelle</a></li>
+				<li><a href="#taskTable">Tasks Tabelle</a></li>
+		</menu>
+		<main>
+			<section id="statusTable">
+				<h1>Statustabelle</h1>
+				<table class="myTable">
+					<thead id="tableHeadStatus">
+						<tr>
+							<th onClick="javascript:tableSort('I')">ID</th>
+							<th onClick="javascript:tableSort('IP')">IP</th>
+							<th onClick="javascript:tableSort('T')">Task</th>
+							<th onClick="javascript:tableSort('W')">Workload</th>
+							<th onclick="javascript:tableSort('AI')">Action</th>
+						</tr>
+					</thead>
+					<tbody id="tableBodyStatus"></tbody>
+				</table>
+			</section>
+			<section id="taskTable">
+				<h1>Aufgabentabelletabelle</h1>
+				<table class="myTable">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Type</th>
+							<th>Input</th>
+							<th>Output</th>
+						</tr>
+					</thead>
+					<tbody id="tableBodyTasks"></tbody>
+				</table>
+				<button onclick="javascript:getTasks()">Refresh</button>
+				<h2>Inputformular</h2>
+				<input type="text" name="" value="" id="textInput">
+				<select id ="typeInput">
+					<option>hash-md5</option>
+					<option>hash-sha256</option>
+					<option>crack-md5</option>
+				</select>
+				<button onclick="javascript:sendInputData()">Senden</button>
+			</section>
+			
+		</main>
+	</body>
+	<script src="../../design/index.js"></script>
+</html>
