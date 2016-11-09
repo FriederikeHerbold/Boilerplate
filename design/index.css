@@ -1,12 +1,14 @@
 body {
 	display: block;
-	background: linear-gradient(to bottom right, #0e1e84, #131521);
+	background-color: #28a394;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 
 menu {
 	display: block;
 	position: absolute;
-	color: #0e1e84;
+	background-color: #28a24e;
     width: 20%;
     top: 0%;
     left: 0px;
@@ -15,64 +17,46 @@ menu {
     bottom: 0px;
 }
 
-menu:hover {
-	color: #84240e;
-}
-
-menu:focus {
-	color: #586847;
-}
-
-menu:active {
+menu > a {
+	display: inline-block;
+	font-size: 16;
+	border: 1px solid gold;	
+	background-color: silver;
+	margin: 20px;
+	padding: 20px;
+	left: 5%;
 	color: #000000;
+}
+
+menu > a:hover {
+	color: #986147;
+}
+
+menu > a:active {
+	color: red;
 }
 
 main {
 	position: absolute;
 	display: block;
-	background: black;
+	background-color: black;
 	width: 100%;
 	top: 0%;
 }
 
-#statusTable {
-	display: inline-block;
-	background-color: blue;
+main > section {
+	display: block;
 	position: absolute;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
 	left: 100%;
-	width: 80%;
 	transform: translate(100%, 0%);
-	transition: transform 500ms ease-out;
+	transition: transform 300ms ease-out;
 }
 
-#statusTable:target {
+main > section:target {
 	transform: translate(0%, 0%);
-	transition: transform 500ms ease-out;
+	transition: transform 300ms ease-out;
 	left: 20%;
 }
-
-#taskTable {
-	display: inline-block;
-	background-color: blue;
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-	left: 100%;
-	width: 80%;
-	transform: translate(100%, 0%);
-	transition: transform 500ms ease-out;
-}
-
-#taskTable:target {
-	transform: translate(0%, 0%);
-	transition: transform 500ms ease-out;
-	left: 20%;
-}
-
 
 table {
 	display: inline-block;
@@ -90,21 +74,9 @@ th:hover {
 	color: #595931;
 }
 
-.sortW {
-	display: block;
-	color: red;
-	background: black;
-}
-
 .myTable {
 	display: table;
 	table-layout: inherit;
 	color: orange;
-	background: green;
-}
-
-#statusTable {
-	display: block;
-	color: organge;
 	background: green;
 }

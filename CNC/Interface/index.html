@@ -7,8 +7,8 @@
 	</head>
 	<body>
 		<menu class="mymenu">
-				<li><a href="#statusTable">Status Tabelle</a></li>
-				<li><a href="#taskTable">Tasks Tabelle</a></li>
+				<a href="#statusTable" id="statusTableLink">Status Tabelle</a>
+				<a href="#taskTable" id="taskTableLink">Tasks Tabelle</a>
 		</menu>
 		<main>
 			<section id="statusTable">
@@ -27,7 +27,7 @@
 				</table>
 			</section>
 			<section id="taskTable">
-				<h1>Aufgabentabelletabelle</h1>
+				<h1>Aufgabentabelle</h1>
 				<table class="myTable">
 					<thead>
 						<tr>
@@ -49,7 +49,6 @@
 				</select>
 				<button onclick="javascript:sendInputData()">Senden</button>
 			</section>
-			
 		</main>
 	</body>
 	<script src="../../design/index.js"></script>

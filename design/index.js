@@ -2,8 +2,7 @@ var xhrStatusTable = new XMLHttpRequest();
 var xhrSend = new XMLHttpRequest();
 var xhrGetTasks = new XMLHttpRequest();
 var xhrInputData = new XMLHttpRequest();
-getInformationFromServer();
-var timer = setInterval(getInformationFromServer, 5000);
+var timer = setInterval(getInformationFromServer, 1000);
 
 var dataArchive = {
 	dataStatus: null,
@@ -22,7 +21,6 @@ xhrStatusTable.onload = function() {
     var data = xhrStatusTable.response;
     if (data !== null) {
 		dataArchive.dataStatus = data;
-		shuffle(dataArchive.dataStatus);
 		tableSort(dataArchive.sortMode);
 		setTableStatus();
     }
@@ -33,29 +31,29 @@ xhrGetTasks.onload = function() {
 	
 	var data = xhrGetTasks.response;
 	if (data != null) {
-		dataArchive.dataTasks = data;
-		console.log(typeof data);
+		dataArchive.dataTasks = JSON.parse(data);
+		setTaskTable();
 	}
 }
 
 xhrInputData.onload = function() {
 	
 	var data = xhrInputData.response;
-	if (data !== null)
+	if (data !== null) {
 		console.log(data);
+		getTasks();
+	}
 }
 
-function getInformationFromServer() {
+var getInformationFromServer = function() {
 	xhrStatusTable.open('GET', 'http://botnet.artificial.engineering/api/Status');
-
 	xhrStatusTable.responseType = 'json';
 	xhrStatusTable.setRequestHeader('Content-Type', 'application/json');
 	xhrStatusTable.send(null);
-	console.log("Server angefragt...");
 }
 
-function setTableStatus() {
-	var table = document.getElementById("tableBodyStatus");
+var setTableStatus = function() {
+	var table = document.querySelector("#tableBodyStatus");
 	if (table.rows.length > 0) {
 		for (var i = table.rows.length - 1; i >= 0; i--)
 			table.deleteRow(i);
@@ -67,16 +65,16 @@ function setTableStatus() {
 		row.insertCell(1).innerHTML = dataArchive.dataStatus[i].ip;
 		row.insertCell(2).innerHTML = dataArchive.dataStatus[i].task;
 		row.insertCell(3).innerHTML = dataArchive.dataStatus[i].workload;
-		row.insertCell(4).innerHTML = '<button id="activeBtn"' + i + '" onclick="javascript:sendData(' + i + ')">' + ((dataArchive.dataStatus[i].workload === 0) ? 'Stop' : 'Start') + '</button>';
+		row.insertCell(4).innerHTML = '<button id="activeBtn"' + i + '" onclick="javascript:sendData(' + i + ')">' + ((dataArchive.dataStatus[i].workload === 0) ? 'Start' : 'Stop') + '</button>';
 	}
 }
 
-function tableSort(sortMode) {
+var tableSort = function(sortMode) {
 	if (dataArchive.sortMode != sortMode)
 		dataArchive.sortMode = sortMode;
 	else if (dataArchive.sortMode == "")
 		return;
-	var tableBodyStatus = document.getElementById("tableBodyStatus");
+	var tableBodyStatus = document.querySelector("#tableBodyStatus");
 	if (sortMode == "I")
 		dataArchive.dataStatus.sort(function (a, b) {
 			return a.id - b.id;
@@ -132,10 +130,10 @@ function tableSort(sortMode) {
 	setTableStatus();
 }
 
-function sendData(idx) {
+var sendData = function(idx) {
 	var data = {
 		id: dataArchive.dataStatus[idx].id,
-		status: (dataArchive.dataStatus[idx].workload == 0) ? true : false
+		status: (dataArchive.dataStatus[idx].workload === 0) ? true : false
 	};
 	xhrSend.open('POST', 'http://botnet.artificial.engineering:80/api/Status');
 	xhrSend.setRequestHeader('Content-Type', 'application/json');
@@ -143,16 +141,14 @@ function sendData(idx) {
 	getInformationFromServer();
 }
 
-function getTasks() {
+var getTasks = function() {
 	xhrGetTasks.open('GET', 'http://botnet.artificial.engineering/api/Tasks');
 	xhrGetTasks.setRequestHeader('Content-Type', 'application/json');
 	xhrGetTasks.send(null);
-	if (!dataArchive.dataTasks)
-		return;
-	console.log("_________________");
-	console.log(typeof dataArchive.dataTasks);
-	console.log(dataArchive.dataTasks)
-	var tableBody = document.getElementById("tableBodyTasks");
+}
+
+var setTaskTable = function() {
+	var tableBody = document.querySelector("#tableBodyTasks");
 	if (tableBody.rows.length > 0) {
 		for (var i = tableBody.rows.length - 1; i >= 0; i--)
 			tableBody.deleteRow(i);
@@ -162,36 +158,17 @@ function getTasks() {
 		row.align = "center";
 		row.insertCell(0).innerHTML = dataArchive.dataTasks[i].id;
 		row.insertCell(1).innerHTML = dataArchive.dataTasks[i].type;
-		row.insertCell(2).innerHTML = dataArchive.dataTasks[i].input;
-		row.insertCell(3).innerHTML = dataArchive.dataTasks[i].output;
-	}
+		row.insertCell(2).innerHTML = dataArchive.dataTasks[i].data.input;
+		row.insertCell(3).innerHTML = dataArchive.dataTasks[i].data.output;
+	}	
 }
 
 
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
-function sendInputData() {
+var sendInputData = function() {
 	var data = {
-		type: document.getElementById("typeInput").value,
+		type: document.querySelector("#typeInput").value,
 		data: {
-			input: document.getElementById("textInput").value
+			input: document.querySelector("#textInput").value
 		}
 	}
 	xhrInputData.open('POST', 'http://botnet.artificial.engineering/api/Tasks');
@@ -199,3 +176,16 @@ function sendInputData() {
 	xhrInputData.send(JSON.stringify(data));
 	getTasks();
 }
+
+var init = function () {
+	var links = [].slice.call(document.querySelectorAll("menu a"));
+	var sections = [].slice.call(document.querySelectorAll("main section"));
+	links.forEach(function (links) {
+		var mytarget = document.querySelectorAll("link.href");
+		sections.forEach(function (other) {
+			other.className = other === mytarget ? "active" : "";
+		});
+	});
+}
+
+getInformationFromServer();
