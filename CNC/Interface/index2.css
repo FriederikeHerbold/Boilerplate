@@ -1,0 +1,103 @@
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+menu {
+	display: block;
+	position: fixed;
+	top: 0px;
+	right: auto;
+	bottom: 0px;
+	left: 0px;
+	margin: 0px;
+	padding: 16px;
+	width: 20%;
+	color: #ffffff;
+	background: #222222;
+}
+
+header {
+	display: block;
+	position: fixed;
+	color: #ffffff;
+	background: #222222;
+	top: 0px;
+	right: 0px;
+	bottom: auto;
+	left: 20%;
+	height: 64px;
+	z-index: 2;
+}
+
+header h3 {
+	font: bold 32px/64px 'Ubuntu Mono';
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+}
+
+main {
+	display: block;
+	position: absolute;
+	top: 64px;
+	right: 0px;
+	bottom: 0px;
+	left: calc(20% + 32px);
+	color: #222222;
+	background: #ffffff;
+	font-size: 24px;
+	/* OLD overflow */
+	/* overflow: auto; */
+	overflow: hidden;
+	z-index: 1;
+}
+
+/*
+ * MAIN
+ */
+
+main > section {
+	display: block;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: calc(20% + 32px);
+	width: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+main > section {
+	transform: translate(100%, 0%);
+	transition: transform 300ms ease-out;
+}
+
+main > section:target {
+	transform: translate(0%, 0%);
+	transition: transform 300ms ease-out;
+}
+
+
+
+/*
+ * MENU
+ */
+
+menu li {
+	display: block;
+	list-style: none;
+	font: bold 24px/48px 'Ubuntu Mono';
+	text-align: center;
+}
+
+menu a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+menu a:hover {
+	color: #09cbff;
+}

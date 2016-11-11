@@ -1,13 +1,14 @@
 <DOCTYPE html>
-<html>
-   <head>
-     <title>Vorlesung Webanwendungen</title>
-     <link rel="stylesheet" href="index.css"/>
-     <link rel="stylesheet" media="print" href="print.css"/>
-     <meta charset="UTF-8">
-     <meta name="author" content="Friederike">
-     <meta name="deacription" content="Versuchsseite"
-    </head>
+  <html>
+
+  <head>
+    <title>Vorlesung Webanwendungen</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" media="print" href="print.css" />
+    <meta charset="UTF-8">
+    <meta name="author" content="Friederike">
+    <meta name="deacription" content="Versuchsseite" </head>
+
     <body>
       <div id="m">
         <menue>
@@ -18,135 +19,43 @@
         </menue>
       </div>
       <div id="b">
-      <main>
-        <menue contenteditable="">
-          <section id="status">
-            <article>
-              <p>hier tabelle rein</p>
-            </article>
-         </section>
-         <section id="tasks">
-           <article>
-             <p>Tasks<br>Liste mit zeilen und spalten</p>
-           </article>
-           <table>
-              <thead>
-                 <tr>
-                    <th>Gruppe </th>
-                    <th>Vorname </th>
-                    <th>Name </th>
-                    <th>Studiengang </th>
-                    <th>Matrikelnummer</th>
-                 </tr>
-              </thead>
-              <tbody>
-                 <tr>
-                    <td>1</td>
-                    <td>Ich</td>
-                    <td>Egal</td>
-                    <td>hier</td>
-                    <td>12345678</td>
-                 </tr>
-                 <tr>
-                    <td>2</td>
-                    <td>nochml Ich</td>
-                    <td>auch Egal</td>
-                    <td>ja, hier</td>
-                    <td>87654321</td>
-                 </tr>
-              </tbody>
-           </table>
-           <script>
-           var erg = {huhu:2};
-           var duda=function(a,b,c){
-             erg.huhu=a+b+c;
-           }
-           duda(1,2,3);
-           console.log(erg.huhu);
-           var zwei =2;
-          var obj = { foo: 'bar' };
-          var fn  = function(a, b, c) {
-            console.log(this, a, b, c);
-          };
+        <main>
+          <menue>
+            <section id="status">
+              <script language="Javascript" type="text/Javascript" src="status.js"></script>
+              <article>
+                <p>hier tabelle rein</p>
+              </article>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Auftrag (ID)</th>
+                    <th>IP </th>
+                    <th>Task </th>
+                    <th>Workload </th>
+                    <th>Start/Stopp Button </th>
+                  </tr>
+                </thead>
+                <tbody> </tbody>
+              </table>
 
-          var foo = fn.bind(obj, 5,6);
-
-          foo(1, 2, 3);
-          var foo = fn.bind(zwei, 2)
-          foo(2, 3, 4);
-
-          foo.call(this,  1, 2, 3);
-          foo.apply(this, [ 1, 2, 3 ]);
-
-var arr = [ 1, 2, 3 ];
-          var foo = arr.map(function(val, index) {
-    return Math.pow(val, 2);
-});
-
-var foo = arr.map(Math.pow);
-console.log(foo);
-var bar = arr.map(Math.pow.bind(Math, 2));
-console.log(bar);
-var arr = [ 1, 2, 2, 1, 2, 2, 1, 3, 3, 1 ];
-var foo = arr.filter(function(val, index) {
-    return val !== 2;
-});
-
-console.log(arr === foo);
-console.log(foo);
-var fizz = function* () {
-    let i = 0;
-    while (++i) {
-        var is_fizz = i % 3 === 0;
-        if (is_fizz) {
-            yield 'Fizz';
-        } else {
-            yield '' + i;
-        }
-    }
-};
-var fizzbuzz = function* () {
-    let i = 0;
-    while (++i) {
-      var is_fizz = i % 3 === 0;
-      var is_buzz = i % 5 === 0;
-      var is_fizzbuzz =i % 3 === 0 & i % 5 === 0;
-      if (is_fizzbuzz) {
-          yield 'FizzBuzz';
-      }else if (is_buzz) {
-          yield 'Buzz';
-      }else if (is_fizz) {
-          yield 'Fizz'
-        }else {
-          yield '' +i;
-        }
-    }
-};
-
-var generator = fizzbuzz();
-for (let i = 0; i < 100; i++) {
-    console.log(generator.next().value);
-}
-
-
-
-           </script>
-         </section>
-           </menue>
-      </main>
+            </section>
+            <section id="tasks">
+              <script language="Javascript" type="text/Javascript" src="task.js"></script>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Input</th>
+                    <th>Output</th>
+                    <th>ID</th>
+                    <th>Type </th>
+                  </tr>
+                </thead>
+                <tbody> </tbody>
+              </table>
+          </menue>
+        </main>
       </div>
-      <script>
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', 'http://botnet.artificial.engineering:80/api/Status');
-      xhr.responseType = 'json';
-      xhr.setRequestHeader('Token', 'my-token-1337');
-      xhr.onload = function() {
-        var data = xhr.response;
-        if (data !== null) {
-          console.log(data); // Parsed JSON object
-        }
-      };
-      xhr.send(null);
-    </script>
-     </body>
- </html>
+    </body>
+
+  </html>
