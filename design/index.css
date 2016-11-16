@@ -47,7 +47,6 @@ main {
 main > section {
 	display: block;
 	position: absolute;
-	width: 80%;
 	left: 100%;
 	transform: translate(100%, 0%);
 	transition: transform 300ms ease-out;
@@ -59,13 +58,18 @@ main > section:target {
 	left: 20%;
 }
 
+main > section:disabled {
+	left: 100%;
+}
+
 table {
 	display: inline-block;
 	padding: 5px;
 	margin: 5px;
-	width: 100%;
+//	width: 100%;
 	border-spacing: 10px;
     border-collapse: separate;
+	table-layout: fixed;
 }
 
 tr:hover {
