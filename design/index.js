@@ -2,6 +2,7 @@ var xhrStatusTable = new XMLHttpRequest();
 var xhrSend = new XMLHttpRequest();
 var xhrGetTasks = new XMLHttpRequest();
 var xhrInputData = new XMLHttpRequest();
+var i = 0;
 var timer = setInterval(getInformationFromServer, 1000);
 
 var dataArchive = {
@@ -45,11 +46,12 @@ xhrInputData.onload = function() {
 	}
 }
 
-var getInformationFromServer = function() {
+function getInformationFromServer() {
 	xhrStatusTable.open('GET', 'http://botnet.artificial.engineering/api/Status');
 	xhrStatusTable.responseType = 'json';
 	xhrStatusTable.setRequestHeader('Content-Type', 'application/json');
 	xhrStatusTable.send(null);
+	console.log("Anfrage an Server");
 }
 
 var setTableStatus = function() {
