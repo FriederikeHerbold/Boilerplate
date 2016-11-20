@@ -1,15 +1,8 @@
-/*
-var task_data=function(data){
-  var code = data.map((val,index) => {
-    return '<tr><td>' + Object.values(val).join('</td><td>') + '</td></tr>';
-  }).join('\n');
-  return code;
-};*/
 var task_data = function(data) {
     var table = document.querySelector('#tasks tbody');
     var taskArr = data;
     var taskTable = '';
-    for (var i = 0, il = data.length; i < il; i++) {
+    for (var i = 0; i < data.length; i++) {
         taskTable += '<tr>';
         taskTable += '<td>' + taskArr[i].id + '</td>';
         taskTable += '<td>' + taskArr[i].type + '</td>';
@@ -28,15 +21,16 @@ function getTasks() {
     task.onload = function() {
         var data = task.response;
         if (data !== null) {
-            console.log(data); // Parsed JSON object
-            var element = document.querySelector('#tasks tbody');
-            task_data(data);
+            console.log(data);
+            if (document.querySelector('#tasks tbody').rows.length < data.length); {
+                task_data(data);
+            }
         }
     };
     task.send(null);
 }
 getTasks();
-setInterval(getTasks, 10000)
+setInterval(getTasks, 20000)
 
 function doSend() {
     var sende = new XMLHttpRequest();

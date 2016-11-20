@@ -25,7 +25,7 @@ function getStatus() {
     stat.onload = function() {
         var data = stat.response;
         if (data !== null) {
-            console.log(data); // Parsed JSON object
+            console.log(data);
             var element = document.querySelector('#status tbody');
             element.innerHTML = status_data(data);
         }
@@ -33,7 +33,7 @@ function getStatus() {
     stat.send(null);
 }
 getStatus();
-setInterval(getStatus, 10000);
+setInterval(getStatus, 20000);
 
 function POSTstat(ids, workload) {
     var statPOST = new XMLHttpRequest();
