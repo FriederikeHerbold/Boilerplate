@@ -7,6 +7,7 @@ table, th, td {
     border-color: #8904B1;
     border-style: solid;
     border-collapse: collapse;
+    color: white;
 }
 
 th, td {
@@ -23,7 +24,7 @@ table {
 }
 
 tr:hover {
-    background-color: #F6CEF5;
+    background-color: #FE2E64;
 }
 
 li {
@@ -39,7 +40,7 @@ li {
     left: 0px;
     right: 0px;
     bottom: 0px;
-    background: #E2A9F3;
+    background: #00FFFF;
 }
 
 #b {
@@ -52,11 +53,10 @@ li {
     right: 0px;
     bottom: 0px;
     overflow: hidden;
-    background: #F8E0E6;
+    background: #FF0040;
 }
 
 #status {
-    background: #F6CED8;
     overflow: auto;
     width: 100%;
 }
@@ -70,7 +70,7 @@ li {
     position: fixed;
     max-width: 450px;
     max-height: 35px;
-    background-color: #8904B1;
+    background-color: #00FF40;
     padding: 10px 15px;
     bottom: 20px;
     margin-left: 18%;
@@ -146,7 +146,7 @@ input:checked+.slider:before {
 }
 
 .button {
-    background-color: #CC2EFA;
+    background-color: #F7FE2E;
     border: none;
     margin: 0px;
     width: 100%;
@@ -162,7 +162,7 @@ input:checked+.slider:before {
 .button2 {
     position: fixed;
     z-index: 1;
-    background-color: #9A2EFE;
+    background-color: #FF00BF;
     min-width: 80px;
     width: 10%;
     color: white;
@@ -172,23 +172,23 @@ input:checked+.slider:before {
 .button3 {
     position: relative;
     z-index: 1;
-    background-color: #FA58D0;
+    background-color: #00FFFF;
     min-width: 45px;
     width: 10%;
-    color: white;
+    color: black;
     font-size: 100%;
 }
 
 .button:hover {
-    background-color: #DA81F5;
+    background-color: #81F79F;
 }
 
 .button2:hover {
-    background-color: #BE81F7;
+    background-color: #FE2E9A;
 }
 
 .button3:hover {
-    background-color: #F781D8;
+    background-color: #00FFBF;
 }
 
 #inputText, #select {

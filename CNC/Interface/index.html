@@ -1,80 +1,71 @@
 <DOCTYPE html>
-<html>
-   <head>
-     <title>Vorlesung Webanwendungen</title>
-     <link rel="stylesheet" href="index.css"/>
-     <link rel="stylesheet" media="print" href="print.css"/>
-     <meta charset="UTF-8">
-     <meta name="author" content="Friederike">
-     <meta name="deacription" content="Versuchsseite"
-    </head>
+  <html>
+
+  <head>
+    <title>Vorlesung Webanwendungen</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" media="print" href="print.css" />
+    <meta charset="UTF-8">
+    <meta name="author" content="Friederike">
+    <meta name="deacription" content="Versuchsseite" </head>
+
+    <script src="status.js"></script>
+    <script src="task.js"></script>
+    <script src="menue.js"></script>
+
     <body>
       <div id="m">
         <menue>
-          <li><a href="http://www.google.de/">link zu google<br></a></li>
-          <li><a href="#status">status</a></li>
-          <li><a href="#tasks">tasks</a></li>
-          <article>nur n kleiner text</article>
+          <li><a href="#status" class="button" onclick="seitenWechsel('status'); return false">status</a></li>
+          <li><a href="#tasks " class="button" onclick="seitenWechsel('tasks'); return false">tasks</a></li>
         </menue>
       </div>
       <div id="b">
-      <main>
-        <menue contenteditable="">
-          <section id="status">
-            <article>
-              <p>Status<br>Kleine Liste</p>
-            </article>
-           <table>
-              <tbody>
-                 <tr>
-                  <li tabindex="1" accaskey="1">Element1</li>
-                 </tr>
-                 <tr>
-                  <li tabindex="1" accaskey="2">Element2</li>
-                 </tr>
-                 <tr>
-                  <li tabindex="1" accaskey="2">Element3</li>
-                 </tr>
-                 <tr>
-                  <li tabindex="1" accaskey="2">Element4</li>
-                 </tr>
-               </tbody>
-           </table>
-         </section>
-         <section id="tasks">
-           <article>
-             <p>Tasks<br>Liste mit zeilen und spalten</p>
-           </article>
-           <table>
-              <thead>
-                 <tr>
-                    <th>Gruppe </th>
-                    <th>Vorname </th>
-                    <th>Name </th>
-                    <th>Studiengang </th>
-                    <th>Matrikelnummer</th>
-                 </tr>
-              </thead>
-              <tbody>
-                 <tr>
-                    <td>1</td>
-                    <td>Ich</td>
-                    <td>Egal</td>
-                    <td>hier</td>
-                    <td>12345678</td>
-                 </tr>
-                 <tr>
-                    <td>2</td>
-                    <td>nochml Ich</td>
-                    <td>auch Egal</td>
-                    <td>ja, hier</td>
-                    <td>87654321</td>
-                 </tr>
-              </tbody>
-           </table>
-         </section>
-           </menue>
-      </main>
-    </div>
-     </body>
- </html>
+        <main>
+          <menue>
+            <section id="status">
+              <button onclick="getStatus()" class="button button2">refresh</button>
+              <table>
+                <thead>
+                  <tr>
+                    <th> Auftrag (ID) </th>
+                    <th> IP </th>
+                    <th> Task </th>
+                    <th> Workload </th>
+                    <th> Start/Stopp Button </th>
+                  </tr>
+                </thead>
+                <tbody> </tbody>
+              </table>
+            </section>
+
+            <section id="tasks">
+              <button onclick="getTasks()" class="button button2">refresh</button>
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Type </th>
+                    <th>Input</th>
+                    <th>Output</th>
+                  </tr>
+                </thead>
+                <tbody> </tbody>
+              </table>
+              <div id="eingabe">
+                <input type="text" name="input" id="inputText" />
+                <select id="select">
+                  <option>hash-md5</option>
+                  <option>hash-sha256</option>
+                  <option>crack-md5</option>
+                </select>
+                <button onclick="doSend()" class="button button3">send</button>
+              </div>
+            </section>
+          </menue>
+        </main>
+      </div>
+    </body>
+
+  </html>
+  html>
