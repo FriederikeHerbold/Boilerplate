@@ -19,7 +19,8 @@ var status_data = function(data) {
 
 function getStatus() {
     var stat = new XMLHttpRequest();
-    stat.open('GET', 'http://botnet.artificial.engineering:80/api/Status');
+    //  stat.open('GET', 'http://botnet.artificial.engineering:80/api/Status');
+    stat.open('GET', 'http://localhost:3000/api/Status');
     stat.responseType = 'json';
     stat.setRequestHeader('Token', 'meins-1337');
     stat.onload = function() {
@@ -37,7 +38,8 @@ setInterval(getStatus, 20000);
 
 function POSTstat(ids, workload) {
     var statPOST = new XMLHttpRequest();
-    statPOST.open('POST', 'http://botnet.artificial.engineering:80/api/Status', true);
+    // statPOST.open('POST', 'http://botnet.artificial.engineering:80/api/Status', true);
+    statPOST.open('POST', 'http://localhost:3000/api/Status', true);
     statPOST.responseType = 'json';
     statPOST.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
     statPOST.setRequestHeader('Token', 'meins-1337');
