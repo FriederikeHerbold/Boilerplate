@@ -15,7 +15,7 @@ var task_data = function(data) {
 
 function getTasks() {
     var task = new XMLHttpRequest();
-    //  task.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks');
+    //task.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks');
     task.open('GET', 'http://localhost:3000/api/Tasks');
     task.responseType = 'json';
     task.setRequestHeader('Token', 'meins-1337');
@@ -35,14 +35,13 @@ setInterval(getTasks, 20000)
 
 function doSend() {
     var sende = new XMLHttpRequest();
-    var daten = {
+    let daten = {
         type: select.value,
         data: {
             input: inputText.value
         }
     };
-
-    //  sende.open('POST', 'http://botnet.artificial.engineering:80/api/Tasks', true);
+    //sende.open('POST', 'http://botnet.artificial.engineering:80/api/Tasks', true);
     sende.open('POST', 'http://localhost:3000/api/Tasks', true);
     sende.responseType = 'json';
     sende.setRequestHeader('Content-type', 'application/json; charset=UTF-8');

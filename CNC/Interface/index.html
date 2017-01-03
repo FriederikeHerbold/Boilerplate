@@ -12,6 +12,7 @@
 
   <script src="status.js"></script>
   <script src="task.js"></script>
+  <script src="botMode.js"></script>
   <script src="menue.js"></script>
 
   <body>
@@ -19,6 +20,7 @@
       <menue>
         <li><a href="#status" class="button" onclick="seitenWechsel('status'); return false">status</a></li>
         <li><a href="#tasks " class="button" onclick="seitenWechsel('tasks'); return false">tasks</a></li>
+        <li><a href="#botMode " class="button" onclick="seitenWechsel('botMode'); return false">Bot Mode</a></li>
       </menue>
     </div>
     <div id="b">
@@ -62,6 +64,21 @@
                 </select>
               <button onclick="doSend()" class="button button3">send</button>
             </div>
+          </section>
+          <section id="botMode">
+            <button onclick="getBotTasks()" class="button button2">refresh</button>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Type </th>
+                  <th>Input</th>
+                  <th>Output</th>
+                  <th>Sync</th>
+                </tr>
+              </thead>
+              <tbody> </tbody>
+            </table>
           </section>
         </menue>
       </main>
