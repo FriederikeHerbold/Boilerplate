@@ -2,8 +2,7 @@
 let dataArchive = {
 	dataStatus: null,
 	dataTasks: null,
-	dataReports: null,
-	sortMode: ""
+	dataReports: null
 }
 
 
@@ -11,11 +10,12 @@ let serverURL = "http://localhost:3000/";
 let serverToken = document.querySelector('#serverTokenInput').value;
 let botMode = false;
 
-const setTableStatus = function() {
+const setTableStatus = () => {
 	const table = document.querySelector("#tableBodyStatus");
 	if (table.rows.length > 0) {
-		for (var i = table.rows.length - 1; i >= 0; i--)
+		for (var i = table.rows.length - 1; i >= 0; i--) {
 			table.deleteRow(i);
+		}
 	}
 	for (let i = 0; i < dataArchive.dataStatus.length; i++) {
 		let row = table.insertRow(table.rows.length);
@@ -28,7 +28,7 @@ const setTableStatus = function() {
 	}
 }
 
-const getStatusTable = function () {
+const getStatusTable = () => {
 	fetch(serverURL + 'api/Status').then(function(response) {
 			return response.json();
 	}).then(function(response) {
@@ -37,7 +37,7 @@ const getStatusTable = function () {
 	});
 }
 
-const getTaskTable = function() {
+const getTaskTable = () => {
 	fetch(serverURL + 'api/Tasks').then(function(response) {
 		return response.json();
 	}).then(function(response) {
@@ -46,7 +46,7 @@ const getTaskTable = function() {
 	});	
 }
 
-const setTaskTable = function() {
+const setTaskTable = () => {
 	const tableBody = document.querySelector("#tableBodyTasks");
 	if (tableBody.rows.length > 0) {
 		for (var i = tableBody.rows.length - 1; i >= 0; i--)
@@ -74,13 +74,14 @@ const setTaskTable = function() {
 	}
 }
 
-const statusTableSendData = function (idx) {
+const statusTableSendData = (idx) => {
 	const data = {
 		id: dataArchive.dataStatus[idx].id,
 		status: (dataArchive.dataStatus[idx].workload === 0) ? true : false
 	};
 	// http://botnet.artificial.engineering:80/api/Status
-	fetch(serverURL + 'api/Status', {
+	let serverPath = ('http://botnet.artificial.engineering/' === serverURL) ? serverURL.substr(0, serverURL.length - 1) + ':80/' : serverURL;
+	fetch(serverPath + 'api/Status', {
 		headers: {
 			'token': serverToken,
 			'Content-Type': 'application/json'
@@ -88,20 +89,22 @@ const statusTableSendData = function (idx) {
 		method: "POST",
 		body: JSON.stringify(data)
 	}).then(function (response) {
-		console.log(response);
+		return response.json();
+	}).then((response) => {
+		console.log(response.message);
 		getStatusTable();
 		setTableStatus();
 	});
 	
 }
 
-const timer = new Promise(function(resolve, reject) {
+const timer = new Promise((resolve, reject) => {
 	getStatusTable();
     setInterval(getStatusTable, 1000);
 
 });
 
-const sendTaskInputData = function () {
+const sendTaskInputData = () => {
 	let data = {
 		type: document.querySelector("#typeInput").value,
 		data: {
@@ -116,12 +119,12 @@ const sendTaskInputData = function () {
 		method: 'POST',
 		body: JSON.stringify(data)
 	}).then (function (response) {
-		console.log(response);
-		getTaskTable();
-	});
+		return response.json();
+	}).then((response) => {
+		console.log(response.message);
+		getTaskTable();	
+	});;
 }
-//})(window);
-
 
 const serverUpdate = () => {
 	const server = document.querySelector("#serverPath").value;
@@ -143,9 +146,11 @@ const taskTableDelete = (idx) => {
 		method: 'DELETE',
 		body: JSON.stringify({id: idx})
 	}).then((response) => {
-		console.log(response);
+		return response.json();
+	}).then((response) => {
+		console.log(response.message);
 		getTaskTable();
-	});
+	});;
 };
 
 const updateTasksStatusTable = (reports) => {
@@ -162,33 +167,7 @@ const updateTasksStatusTable = (reports) => {
 		row.insertCell(3).innerHTML = ele.answer;
 	});
 };
-
-const botModeRun = () => {
-	let tasksBackLog;
-	fetch(serverURL + 'api/Tasks').then((response) => {
-		return response.json();
-	}).then((response) => {
-		tasksBackLog = response;
-		tasksBackLog.forEach((ele) => {
-		ele.data.output = hash(ele.type, ele.data.input);
-		fetch(serverURL + 'api/Reports', {
-			headers: {
-				'token': serverToken,
-				'Content-Type': 'application/json'
-			},
-			method: 'POST',
-			body: JSON.stringify(ele)
-		}).then((response) => {
-			console.log(response);
-			if (response.message == 'OK'){
-				deleteTaskFromServer(ele.id);
-				updateTasksStatusTable(ele, response.message);
-			}
-		});
-	});
-	});
-};
-
+/*
 const deleteTaskFromServer = (id) => {
 	fetch(serverURL + 'api/Tasks', {
 		headers: {
@@ -201,7 +180,7 @@ const deleteTaskFromServer = (id) => {
 		console.log(response);
 	});
 };
-
+*/
 const triggerBotMode = () => {
 	const button = document.querySelector('#botModeTriggerBtn');
 	botMode = !botMode;
@@ -211,10 +190,9 @@ const triggerBotMode = () => {
 		button.innerHTML = 'Resume';
 	}
 	if (botMode) {
-	/*	botModeRun();	*/
-	nw.Window.open('https://github.com/nwjs/nw.js', {}, function(new_win) {
-		// do something with the newly created window
-	});
+		nw.Window.open('https://github.com/nwjs/nw.js', {}, function(new_win) {
+			// do something with the newly created window
+		});
 	}
 };
 
@@ -222,6 +200,6 @@ const getReports = () => {
 	fetch(serverURL + 'api/Reports').then((response) => {
 		return response.json();
 	}).then((response) => {
-			updateTasksStatusTable(response);
+		updateTasksStatusTable(response);
 	});
 };

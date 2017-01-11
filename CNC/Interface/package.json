@@ -10,8 +10,8 @@
         "frame":       true,
         "show":        true,
         "transparent": false,
-        "width":       640,
-        "height":      512,
+        "width":       1280,
+        "height":      720,
         "position":    "center",
         "min_width":   400,
         "min_height":  512

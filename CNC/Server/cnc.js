@@ -354,6 +354,7 @@ const getNewTasks = () => {
 	return answer;
 };
 
+/*
 const serverShutDown = () => {
 	server.close(() => {
 		if (archive.stat != null) {
@@ -373,6 +374,6 @@ const serverShutDown = () => {
 process.on('SIGTERM', serverShutDown);
 
 process.on('SIGINT', serverShutDown);
-
+*/
 const server = app.listen(3000);
 }());
