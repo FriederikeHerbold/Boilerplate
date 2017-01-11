@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Meilenstein I</title>
+		<title>[WAW] Die Dudes: Meilenstein I + II + III + IV</title>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="../../design/index.css" type="text/css" />
+		<link rel="stylesheet" href="index.css" type="text/css" />
 	</head>
 	<body>
 		<menu class="mymenu">
-				<a href="#statusTable" id="statusTableLink">Status Tabelle</a>
-				<a href="#taskTable" id="taskTableLink">Tasks Tabelle</a>
+				<a href="#statusTable">Status Tabelle</a>
+				<a href="#taskTable">Tasks Tabelle</a>
+				<a href="#botMode">Bots</a>
+				<a href="#settings">Einstellungen</a>
 		</menu>
 		<main>
 			<section id="statusTable">
@@ -16,15 +18,16 @@
 				<table class="myTable">
 					<thead id="tableHeadStatus">
 						<tr>
-							<th onClick="javascript:tableSort('I')">ID</th>
-							<th onClick="javascript:tableSort('IP')">IP</th>
-							<th onClick="javascript:tableSort('T')">Task</th>
-							<th onClick="javascript:tableSort('W')">Workload</th>
-							<th onclick="javascript:tableSort('AI')">Action</th>
+							<th>ID</th>
+							<th>IP</th>
+							<th>Task</th>
+							<th>Workload</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody id="tableBodyStatus"></tbody>
 				</table>
+				<canvas id="canvas"></canvas>
 			</section>
 			<section id="taskTable">
 				<h1>Aufgabentabelle</h1>
@@ -35,11 +38,12 @@
 							<th>Type</th>
 							<th>Input</th>
 							<th>Output</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody id="tableBodyTasks"></tbody>
 				</table>
-				<button onclick="javascript:getTasks()">Refresh</button>
+				<button onclick="javascript:getTaskTable()">Refresh</button>
 				<h2>Inputformular</h2>
 				<input type="text" name="" value="" id="textInput">
 				<select id ="typeInput">
@@ -47,9 +51,38 @@
 					<option>hash-sha256</option>
 					<option>crack-md5</option>
 				</select>
-				<button onclick="javascript:sendInputData()">Senden</button>
+				<button onclick="javascript:sendTaskInputData()">Senden</button>
+			</section>
+			<section id="botMode">
+				<h1>Bot Mode</h1>
+				<button onclick="javascript:triggerBotMode()" id="botModeTriggerBtn">Resume</button>
+				<h1>Aufgabenstatustabelle</h1>
+				<table class="myTable">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Input</th>
+							<th>Output</th>
+							<th>Sync</th>
+						</tr>
+					</thead>
+					<tbody id="tableTaskStatusBody"></tbody>
+				</table>
+				<button onclick="javascript:getReports()">Update</button>
+			</section>
+			<section id="settings">
+				<h1>Einstellungen</h1>
+				<span>Server</span>
+				<select id="serverPath">
+					<option>http://localhost:3000/</option>
+					<option>http://botnet.artificial.engineering/</option>
+				</select>
+				<button onClick="javascript:serverUpdate()">Update</button>
+				<br>
+				<span>Token</span>
+				<input type="text" name="" value="123abc" id="serverTokenInput">
 			</section>
 		</main>
 	</body>
-	<script src="../../design/index.js"></script>
+	<script src="index.js"></script>
 </html>
