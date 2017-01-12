@@ -13,7 +13,7 @@
 	}));
 	app.use('/api', router);
 
-	const serverToken = '123abc'; /* token for POST */
+	const serverToken = '8a30f43349f4d206c3aa5b1b84c97a29'; /* token for POST */
 
 	let archive = { /* data storage */
 		tasks: null,
@@ -23,17 +23,17 @@
 
 	const startUp = (arc) => { /* load data from file if exits */
 		if (fs.existsSync('./tasks.json')) {
-			arc.tasks = require('./tasks.json');
+			arc.tasks = JSON.parse(fs.readFileSync('tasks.json', 'utf8'));
 		} else {
 			arc.tasks = [];
 		}
 		if (fs.existsSync('./status.json')) {
-			arc.stat = require('./status.json');
+			arc.stat = JSON.parse(fs.readFileSync('status.json', 'utf8'));
 		} else {
 			arc.stat = [];
 		}
 		if (fs.existsSync('./reports.json')) {
-			arc.reports = require('./reports.json');
+			arc.reports = JSON.parse(fs.readFileSync('reports.json', 'utf8'));
 		} else {
 			arc.reports = [];
 		}
@@ -249,12 +249,12 @@
 	};
 
 	const getTargetElement = (array, targetID) => {
-		for (let i = 0; i < array.length; i++) {
-			if (array[i].id === targetID) {
-				return array[i];
-			}
-		}
-		return null;
+		const id = parseInt(targetID);
+		let answer = array.find((element) => {
+			return element.id === id;
+		});
+		console.log(answer + ' ' + typeof targetID);
+		return answer;
 	};
 
 	const postStatus = (body, id, ip) => {
@@ -310,6 +310,7 @@
 			saveTasks(archive.tasks);
 		} else {
 			let ele = getTargetElement(archive.tasks, id);
+			console.log(ele);
 			if (ele) {
 				answer = {
 					message: 'OK'
@@ -338,30 +339,28 @@
 	const postReports = (body, id) => {
 		let answer;
 		if (id !== null) {
-			let found = false;
-			for (let i = 0; i < archive.reports.length && !found; i++) {
-				if (archive.reports[i].id === id) {
-					answer = {
-						message: 'NOT OK'
-					};
-					found = true;
-				}
-			}
-			if (!found) {
+			let ele =  archive.reports.find((element) => {
+				return element.id === id && element.data.input === body.data.input;
+			});
+			if (typeof ele !== "undefined") {
+				answer = {
+					message: 'NOT OK'
+				};
+			} else {
 				answer = {
 					message: 'OK'
 				};
+				archive.reports.push({
+					id: id,
+					data: {
+						input: body.data.input,
+						output: body.data.output
+					},
+					answer: answer.message
+				});
+				archive.reports.sort(sortAfterIDAscending);
+				saveReports(archive.reports);
 			}
-			archive.reports.push({
-				id: id,
-				data: {
-					input: body.data.input,
-					output: body.data.output
-				},
-				answer: answer.message
-			});
-			archive.reports.sort(sortAfterIDAscending);
-			saveReports(archive.reports);
 		} else {
 			answer = {
 				message: 'NOT OK'
@@ -395,7 +394,7 @@
 	const getNewTasks = () => {
 		let answer = [];
 		archive.tasks.forEach((ele) => {
-			if (ele.output === null) {
+			if (ele.data.output === null) {
 				answer.push(ele);
 			}
 		});

@@ -7,6 +7,7 @@ let dataArchive = {
 let serverURL = "http://localhost:3000/";
 let serverToken = document.querySelector('#serverTokenInput').value;
 let botMode = false;
+const crypto = require('crypto');
 
 const setTableStatus = () => {
 	const table = document.querySelector("#tableBodyStatus");
@@ -56,11 +57,13 @@ const buildTableStatus = (targetBody, data) => {
 				buildTableAddObject(row, values[idx]);
 			} else {
 				cell = document.createElement('td');
+				cell.style.align = 'center';
 				cell.innerHTML = values[idx];
 				row.appendChild(cell);
 			}
 		});
 		cell = document.createElement('td');
+		cell.style.align = 'center';
 		cell.innerHTML = '<button id="activeBtn"' + index + '" onclick="javascript:statusTableSendData(' + index + ')">' + ((ele.workload === 0) ? 'Start' : 'Stop') + '</button>';
 		row.appendChild(cell);
 		targetBody.appendChild(row);
@@ -78,11 +81,13 @@ const buildTableTasks = (targetBody, data) => {
 				buildTableAddObject(row, values[idx]);
 			} else {
 				cell = document.createElement('td');
+				cell.style.align = 'center';
 				cell.innerHTML = values[idx];
 				row.appendChild(cell);
 			}
 		});
 		cell = document.createElement('td');
+		cell.style.align = 'center';
 		cell.innerHTML = '<button onclick="javascript:taskTableDelete(' + ele.id + ')">Remove</button>';
 		row.appendChild(cell);
 		targetBody.appendChild(row);
@@ -200,9 +205,7 @@ const triggerBotMode = () => {
 		button.innerHTML = 'Resume';
 	}
 	if (botMode) {
-		nw.Window.open('https://github.com/nwjs/nw.js', {}, function(new_win) {
-			// do something with the newly created window
-		});
+		runBotMode();
 	}
 };
 
@@ -211,5 +214,81 @@ const getReports = () => {
 		return response.json();
 	}).then((response) => {
 		updateTasksStatusTable(response);
+	});
+};
+
+const runBotMode = () => {
+	let backlog = null;
+	fetch(serverURL + 'api/Tasks/new').then((response) => {
+		return response.json();
+	}).then((response) => {
+		backlog = response;
+		processBotBackLog(backlog);
+	});
+};
+
+const processBotBackLog = (backlog) => {
+	if (backlog) {
+		backlog.forEach((element) => {
+			element.data.output = hash(element.type, element.data.input);
+			postTaskOnServer(element);
+			postReportOnServer(element);
+		});
+		triggerBotMode();
+	}
+};
+
+const hash = (type, string) => {
+	if (type !== null && string !== null) {
+		if (type === 'hash-md5') {
+			let md5sum = crypto.createHash('md5');
+			md5sum.update(string);
+			return md5sum.digest('hex');
+		} else if (type === 'hash-sha256') {
+			let sha256sum = crypto.createHash('sha256');
+			sha256sum.update(string);
+			return sha256sum.digest('hex');
+		}
+	}
+	return null;
+};
+
+const postTaskOnServer = (task) => {
+	fetch(serverURL + 'api/Tasks/' + task.id, {
+		headers: {
+			'token': serverToken,
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify(task)
+	}).then((response) => {
+		return response.json();
+	}).then((response) => {
+		console.log('POST TASK:' + response.message);
+		getTaskTable();
+	});
+};
+
+const postReportOnServer = (report) => {
+	console.log('send report');
+	let sendReport = {
+		id: report.id,
+		data: {
+			input: report.data.input,
+			output: report.data.output
+		}
+	};
+	fetch(serverURL + 'api/Reports', {
+		headers: {
+			'token': serverToken,
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify(sendReport)
+	}).then((response) => {
+		return response.json();
+	}).then((response) => {
+		console.log('POST Report: ' + response.message);
+		getReports();
 	});
 };
