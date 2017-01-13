@@ -7,65 +7,87 @@
     <link rel="stylesheet" media="print" href="print.css" />
     <meta charset="UTF-8">
     <meta name="author" content="Friederike">
-    <meta name="deacription" content="Versuchsseite" </head>
+    <meta name="deacription" content="Versuchsseite">
+  </head>
 
-    <script src="status.js"></script>
-    <script src="task.js"></script>
-    <script src="menue.js"></script>
+  <script src="status.js"></script>
+  <script src="task.js"></script>
+  <script src="botMode.js"></script>
+  <script src="menue.js"></script>
 
-    <body>
-      <div id="m">
+  <body>
+    <div id="m">
+      <menue>
+        <li><a href="#status" class="button" onclick="seitenWechsel('status'); return false">status</a></li>
+        <li><a href="#tasks " class="button" onclick="seitenWechsel('tasks'); return false">tasks</a></li>
+        <li><a href="#botMode " class="button" onclick="seitenWechsel('botMode'); return false">Bot Mode</a></li>
+      </menue>
+    </div>
+    <div id="b">
+      <main>
         <menue>
-          <li><a href="#status" class="button" onclick="seitenWechsel('status'); return false">status</a></li>
-          <li><a href="#tasks " class="button" onclick="seitenWechsel('tasks'); return false">tasks</a></li>
-        </menue>
-      </div>
-      <div id="b">
-        <main>
-          <menue>
-            <section id="status">
-              <button onclick="getStatus()" class="button button2">refresh</button>
-              <table>
-                <thead>
-                  <tr>
-                    <th> Auftrag (ID) </th>
-                    <th> IP </th>
-                    <th> Task </th>
-                    <th> Workload </th>
-                    <th> Start/Stopp Button </th>
-                  </tr>
-                </thead>
-                <tbody> </tbody>
-              </table>
-            </section>
+          <section id="status">
+            <button onclick="getStatus()" class="button button2">refresh</button>
+            <table>
+              <thead>
+                <tr>
+                  <th> Auftrag (ID) </th>
+                  <th> IP </th>
+                  <th> Task </th>
+                  <th> Workload </th>
+                  <th> Start/Stopp Button </th>
+                </tr>
+              </thead>
+              <tbody> </tbody>
+            </table>
+          </section>
 
-            <section id="tasks">
-              <button onclick="getTasks()" class="button button2">refresh</button>
-              <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Type </th>
-                    <th>Input</th>
-                    <th>Output</th>
-                  </tr>
-                </thead>
-                <tbody> </tbody>
-              </table>
-              <div id="eingabe">
-                <input type="text" name="input" id="inputText" />
-                <select id="select">
+          <section id="tasks">
+            <button onclick="getTasks()" class="button button2">refresh</button>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Type </th>
+                  <th>Input</th>
+                  <th>Output</th>
+                </tr>
+              </thead>
+              <tbody> </tbody>
+            </table>
+            <div id="eingabe">
+              <input type="text" name="input" id="inputText" />
+              <select id="select">
                   <option>hash-md5</option>
                   <option>hash-sha256</option>
                   <option>crack-md5</option>
                 </select>
-                <button onclick="doSend()" class="button button3">send</button>
-              </div>
-            </section>
-          </menue>
-        </main>
-      </div>
-    </body>
+              <button onclick="doSend()" class="button button3">send</button>
+            </div>
+          </section>
+          <section id="botMode">
+            <button onclick="getBotTasks()" class="button button2">refresh</button>
+            <label class="switch">
+          <input type="checkbox" onchange= "getBotTasks()">
+          <div class="slider round"></div>
+          </label>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Type </th>
+                  <th>Input</th>
+                  <th>Output</th>
+                  <th>Sync</th>
+                </tr>
+              </thead>
+              <tbody> </tbody>
+            </table>
+          </section>
+        </menue>
+      </main>
+    </div>
+  </body>
 
   </html>
   html>
