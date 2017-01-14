@@ -1,8 +1,6 @@
 var status_data = function(data) {
     var code = data.map((val) => {
         var button;
-        console.log(val.id);
-        console.log(val.workload);
         if (val.workload === 0) {
             button = '<label class="switch">' +
                 '<input type="checkbox" onchange= "POSTstat(' + val.id + ', ' + val.workload + ')" >' +
@@ -28,7 +26,6 @@ function getStatus() {
     stat.onload = function() {
         var data = stat.response;
         if (data !== null) {
-            console.log(data);
             var element = document.querySelector('#status tbody');
             element.innerHTML = status_data(data);
         }

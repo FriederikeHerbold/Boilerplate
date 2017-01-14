@@ -7,11 +7,11 @@ let hash_sha256 = crypto.createHash('sha256');
 
 var reports;
 var data;
-var id;
 let run = false;
 
 function startBot() {
     run = true;
+    bot();
 }
 
 function stopBot() {
@@ -20,19 +20,21 @@ function stopBot() {
 
 function bot() {
     getReports();
-    let ids = reports.filter(function() {
-        return (sync === 'OK')
-    }).map(id);
-    console.log(ids);
-    while (run) {
-        executeTask(id);
+    let filteredReports = reports.filter(function(parameter) {
+        return (parameter.sync === 'OK')
+    });
+    let indexOfActualReport = 0;
+    while (run && indexOfActualReport < filteredReports) {
+        executeTask(filteredReports[indexOfActualReport].id);
+        indexOfActualReport += 1;
     }
+    stopBot();
 }
 
 function executeTask(id) {
-    get();
+    get(id);
     crypt();
-    dosend();
+    dosend(id);
     console.log(data);
 }
 module.exports = function() {
@@ -67,7 +69,7 @@ function getReports() {
     task.send(null);
 }
 
-function getTask() {
+function getTask(id) {
     var task = new XMLHttpRequest();
     //task.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks/'+id);
     task.open('GET', 'http://localhost:3000/api/Tasks/' + id);
@@ -79,7 +81,7 @@ function getTask() {
     task.send(null);
 }
 
-function sendTask() {
+function sendTask(id) {
     var sende = new XMLHttpRequest();
     //sende.open('POST', 'http://botnet.artificial.engineering:80/api/Tasks/'+id, true);
     sende.open('POST', 'http://localhost:3000/api/Tasks/' + id, true);

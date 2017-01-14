@@ -22,7 +22,6 @@ function getTasks() {
     task.onload = function() {
         var data = task.response;
         if (data !== null) {
-            console.log(data);
             if (document.querySelector('#tasks tbody').rows.length < data.length) {
                 task_data(data);
             }

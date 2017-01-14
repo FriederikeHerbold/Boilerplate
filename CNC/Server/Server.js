@@ -71,8 +71,8 @@ router.get('/Status', function(req, res) {
     res.json(bot);
 });
 router.get('/Status/:id', function(req, res) {
-    let index = bot.map(function(d) {
-        return d["id"];
+    let index = bot.map(function(parameter) {
+        return parameter["id"];
     }).indexOf(parseInt(req.params.id));
     if (index !== -1) {
         res.json(bot[index]);
@@ -117,6 +117,7 @@ router.post('/Status/:id', function(req, res) {
 router.get('/Tasks', function(req, res) {
     getTasks();
     res.json(tasks);
+    console.log(tasks);
 });
 router.get('/Tasks/:id', function(req, res) {
     getTasks();
