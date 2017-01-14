@@ -16,23 +16,23 @@ const serverToken = 'Team_Mystic_FMF';
 
 // getter von Datei
 var getTasks = function() {
-    fs.readFile(__dirname + '/' + 'TaskData.json', 'UTF-8', function(err, data) {
+    fs.readFile(__dirname + '/' + 'TaskData.json', 'UTF-8', function(err, wert) {
         if (err) throw err;
-        tasks = JSON.parse(data);
+        tasks = JSON.parse(wert);
     });
 };
 
 var getBot = function() {
-    fs.readFile(__dirname + '/' + 'BotData.json', 'UTF-8', function(err, data) {
+    fs.readFile(__dirname + '/' + 'BotData.json', 'UTF-8', function(err, wert) {
         if (err) throw err;
-        bot = JSON.parse(data);
+        bot = JSON.parse(wert);
     });
 };
 
 var getReports = function() {
-    fs.readFile(__dirname + '/' + 'ReportData.json', 'UTF-8', function(err, data) {
+    fs.readFile(__dirname + '/' + 'ReportData.json', 'UTF-8', function(err, wert) {
         if (err) throw err;
-        reports = JSON.parse(data);
+        reports = JSON.parse(wert);
     });
 };
 
@@ -190,7 +190,7 @@ router.post('/Tasks/:id', function(req, res) {
             tasks[index].data.input = req.body.data.input;
             tasks[index].data.output = req.body.data.output;
             saveTasks();
-            if (task[index.data.output] !== null) {
+            if (tasks[index].data.output !== null) {
                 reports[index].sync = 'OK';
             } else {
                 reports[index].sync = 'NOT OK';

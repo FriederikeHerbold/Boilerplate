@@ -116,7 +116,7 @@ function getReports() {
     //rep.open('GET', 'http://botnet.artificial.engineering:80/api/Reports');
     rep.open('GET', 'http://localhost:3000/api/Reports', false);
     //    rep.responseType = 'json';
-    rep.setRequestHeader('Token', 'meins-1337');
+    rep.setRequestHeader('Token', 'Team_Mystic_FMF');
     rep.onload = function() {
         reports = JSON.parse(rep.response);
     };
@@ -128,7 +128,7 @@ function getTask(id) {
     //task.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks/'+id);
     task.open('GET', 'http://localhost:3000/api/Tasks/' + id, false);
     //  task.responseType = 'json';
-    task.setRequestHeader('Token', 'meins-1337');
+    task.setRequestHeader('Token', 'Team_Mystic_FMF');
     task.onload = function() {
         taskData = JSON.parse(task.response);
         console.log('in req: ' + taskData.data.input);
@@ -142,7 +142,7 @@ function sendTask(id) {
     sende.open('POST', 'http://localhost:3000/api/Tasks/' + id, true);
     sende.responseType = 'json';
     sende.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
-    sende.setRequestHeader('Token', 'Bot-Token-1337');
+    sende.setRequestHeader('Token', 'Team_Mystic_FMF');
     let daten = {
         data: {
             input: taskData.data.input,

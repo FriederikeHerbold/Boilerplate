@@ -1,1 +1,4 @@
-[{"id":1,"type":"hash-md5","data":{"input":"huhu","output":null}]
+[{"id":1,"type":"hash-md5","data":{"input":"huhu","output":"f3c2cefc1f3b082a56f52902484ca511"}}
+  ,{"id":2,"type":"hash-md5","data":{"input":"huhu","output":"f3c2cefc1f3b082a56f52902484ca511"}}
+  ,{"id":3,"type":"hash-md5","data":{"input":"huhu","output":"f3c2cefc1f3b082a56f52902484ca511"}}
+   ,{"id":4,"type":"hash-md5","data":{"input":"huhu","output":"f3c2cefc1f3b082a56f52902484ca511"}}]
