@@ -119,6 +119,7 @@ router.get('/Tasks', function(req, res) {
     res.json(tasks);
     console.log(tasks);
 });
+
 router.get('/Tasks/:id', function(req, res) {
     getTasks();
     let index = tasks.map(function(d) {
@@ -131,10 +132,12 @@ router.get('/Tasks/:id', function(req, res) {
         res.send("Task nicht gefunden");
     }
 });
+
 router.get('/Reports', (req, res) => {
     getReports();
     res.json(reports);
 });
+
 router.post('/Reports/:id', (req, res) => {
     let index = reports.map(function(d) {
         return d["id"];
@@ -174,6 +177,7 @@ router.post('/Tasks', function(req, res) {
     }
 
 });
+
 router.post('/Tasks/:id', function(req, res) {
     if (checkToken(req.get("token"))) {
         getTasks();

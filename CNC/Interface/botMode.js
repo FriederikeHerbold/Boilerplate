@@ -1,8 +1,5 @@
 const crypto = require('crypto');
 
-let hash_md5 = crypto.createHash('md5');
-let hash_sha256 = crypto.createHash('sha256');
-
 let reports = [];
 let taskData = null;
 let run = false;
@@ -83,12 +80,13 @@ function bot() {
     stopBot();
 }
 
-function executeTask(id) {
+async function executeTask(id) {
     console.log('in Execute');
     getTask(id);
     crypt();
     sendTask(id);
-    console.log(taskData);
+    getBotTasks();
+    console.log(taskData.data.output);
 }
 
 //module.exports = function() {
@@ -99,13 +97,15 @@ function executeTask(id) {
 function crypt() {
     let erg;
     if (taskData.type === "hash-md5") {
+        let hash_md5 = crypto.createHash('md5');
         hash_md5.update(taskData.data.input);
-        taskData.output = hash_md5.digest('hex');
+        taskData.data.output = hash_md5.digest('hex');
     } else if (taskData.type === "hash-sha256") {
+        let hash_sha256 = crypto.createHash('sha256');
         hash_sha256.update(taskData.data.input);
-        taskData.output = hash_sha256.digest('hex');
+        taskData.data.output = hash_sha256.digest('hex');
     } else if (taskData.type === "crack-md5") {
-        taskData.output = null;
+        console.log('kein Support für crack-md5')
     } else {
         console.log('Typ Falsch');
     }
@@ -130,9 +130,8 @@ function getTask(id) {
     //  task.responseType = 'json';
     task.setRequestHeader('Token', 'meins-1337');
     task.onload = function() {
-        console.log(task.response);
         taskData = JSON.parse(task.response);
-        console.log('in req: ' + taskData.type);
+        console.log('in req: ' + taskData.data.input);
     };
     task.send(null);
 }
@@ -144,8 +143,14 @@ function sendTask(id) {
     sende.responseType = 'json';
     sende.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
     sende.setRequestHeader('Token', 'Bot-Token-1337');
-    sende.onload = function() {
-
+    let daten = {
+        data: {
+            input: taskData.data.input,
+            output: taskData.data.output
+        },
+        id: id,
+        type: taskData.type
     };
-    sende.send(JSON.stringify(taskData));
+    console.log('in POST ' + JSON.stringify(daten));
+    sende.send(JSON.stringify(daten));
 }
