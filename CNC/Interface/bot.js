@@ -5,18 +5,38 @@ const crypto = require('crypto');
 let hash_md5 = crypto.createHash('md5');
 let hash_sha256 = crypto.createHash('sha256');
 
+var reports;
 var data;
 var id;
+let run = false;
 
-function tu() {
-    id = 2;
+function startBot() {
+    run = true;
+}
+
+function stopBot() {
+    run = false;
+}
+
+function bot() {
+    getReports();
+    let ids = reports.filter(function() {
+        return (sync === 'OK')
+    }).map(id);
+    console.log(ids);
+    while (run) {
+        executeTask(id);
+    }
+}
+
+function executeTask(id) {
     get();
     crypt();
     dosend();
     console.log(data);
 }
 module.exports = function() {
-    tu();
+    executeTask();
     console.log("asdas");
 }
 
@@ -35,7 +55,19 @@ function crypt() {
     }
 }
 
-function get() {
+function getReports() {
+    var task = new XMLHttpRequest();
+    //task.open('GET', 'http://botnet.artificial.engineering:80/api/Reports');
+    task.open('GET', 'http://localhost:3000/api/Reports');
+    task.responseType = 'json';
+    task.setRequestHeader('Token', 'meins-1337');
+    task.onload = function() {
+        reports = task.response;
+    };
+    task.send(null);
+}
+
+function getTask() {
     var task = new XMLHttpRequest();
     //task.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks/'+id);
     task.open('GET', 'http://localhost:3000/api/Tasks/' + id);
@@ -47,7 +79,7 @@ function get() {
     task.send(null);
 }
 
-function doSend() {
+function sendTask() {
     var sende = new XMLHttpRequest();
     //sende.open('POST', 'http://botnet.artificial.engineering:80/api/Tasks/'+id, true);
     sende.open('POST', 'http://localhost:3000/api/Tasks/' + id, true);
@@ -58,4 +90,6 @@ function doSend() {
 
     };
     sende.send(JSON.stringify(data));
+}
+
 }
