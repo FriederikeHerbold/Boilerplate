@@ -14,6 +14,7 @@ var task_data = function(data) {
 }
 
 function getTasks() {
+    console.log('GET tasks in Task');
     var task = new XMLHttpRequest();
     //task.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks');
     task.open('GET', 'http://localhost:3000/api/Tasks');
@@ -22,9 +23,9 @@ function getTasks() {
     task.onload = function() {
         var data = task.response;
         if (data !== null) {
-            if (document.querySelector('#tasks tbody').rows.length < data.length) {
-                task_data(data);
-            }
+            //if (document.querySelector('#tasks tbody').rows.length < data.length) {
+            task_data(data);
+            //}
         }
     };
     task.send(null);

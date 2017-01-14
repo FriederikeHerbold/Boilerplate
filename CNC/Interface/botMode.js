@@ -47,17 +47,22 @@ function getBotTasks() {
 }
 
 var toggleBotMode = function() {
+
+    let botModeButton = document.getElementById('starttoggle');
+    console.log('Run:' + run);
     if (!run) {
+        botModeButton.innerHTML = 'Stop Botmode';
         startBot();
     } else {
+        botModeButton.innerHTML = 'Start Botmode';
         stopBot();
     }
-    bot();
 };
 
 function startBot() {
     run = true;
     getBotTasks();
+    bot();
 }
 
 function stopBot() {
@@ -77,7 +82,7 @@ function bot() {
         console.log('nach Execute');
         indexOfActualReport += 1;
     }
-    stopBot();
+    //stopBot();
 }
 
 async function executeTask(id) {

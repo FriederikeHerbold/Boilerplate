@@ -18,6 +18,7 @@ const serverToken = 'Team_Mystic_FMF';
 var getTasks = function() {
     fs.readFile(__dirname + '/' + 'TaskData.json', 'UTF-8', function(err, wert) {
         if (err) throw err;
+        console.log('tasks von Datei lesen' + wert);
         tasks = JSON.parse(wert);
     });
 };
@@ -32,6 +33,7 @@ var getBot = function() {
 var getReports = function() {
     fs.readFile(__dirname + '/' + 'ReportData.json', 'UTF-8', function(err, wert) {
         if (err) throw err;
+        console.log('Report vom Datei Lesen' + wert);
         reports = JSON.parse(wert);
     });
 };
@@ -117,7 +119,7 @@ router.post('/Status/:id', function(req, res) {
 router.get('/Tasks', function(req, res) {
     getTasks();
     res.json(tasks);
-    console.log(tasks);
+    console.log('GET und refresh:' + JSON.stringify(tasks));
 });
 
 router.get('/Tasks/:id', function(req, res) {
@@ -181,6 +183,7 @@ router.post('/Tasks', function(req, res) {
 router.post('/Tasks/:id', function(req, res) {
     if (checkToken(req.get("token"))) {
         getTasks();
+        getReports();
 
         let index = tasks.map(function(d) {
             return d["id"];
@@ -189,7 +192,10 @@ router.post('/Tasks/:id', function(req, res) {
             tasks[index].type = req.body.type;
             tasks[index].data.input = req.body.data.input;
             tasks[index].data.output = req.body.data.output;
+            console.log('Tasks: ' + tasks);
             saveTasks();
+            console.log('Output: ' + tasks[index].data.output);
+            console.log('reports in GET:' + reports);
             if (tasks[index].data.output !== null) {
                 reports[index].sync = 'OK';
             } else {
