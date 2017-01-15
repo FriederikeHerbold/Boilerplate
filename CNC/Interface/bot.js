@@ -31,10 +31,10 @@ function bot() {
     stopBot();
 }
 
-function executeTask(id) {
-    get(id);
+function executeTask(taskId) {
+    get(taskId);
     crypt();
-    dosend(id);
+    dosend(TaskId);
     console.log(data);
 }
 module.exports = function() {

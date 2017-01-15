@@ -1,27 +1,26 @@
 const crypto = require('crypto');
 
 let reports = [];
-let taskData = null;
+let taskToWorkWith = null;
 let run = false;
 
-const bot_data = function(data) {
+const actualizeTable = function(taskArray) {
     var table = document.querySelector('#botMode tbody');
-    var taskArr = data;
     var taskTable = '';
     let sync = '';
-    for (var index = 0; index < data.length; index += 1) {
-        console.log(taskArr[index].id + ' : ' + taskArr[index].data.output);
-        console.log(typeof taskArr[index].type);
-        if (taskArr[index].data.output === null) {
+    for (var index = 0; index < taskArray.length; index += 1) {
+        console.log(taskArray[index].id + ' : ' + taskArray[index].data.output);
+        console.log(typeof taskArray[index].type);
+        if (taskArray[index].data.output === null) {
             sync = 'OK';
         } else {
             sync = 'NOT OK';
         }
         taskTable += '<tr>';
-        taskTable += '<td>' + taskArr[index].id + '</td>';
-        taskTable += '<td>' + taskArr[index].type + '</td>';
-        taskTable += '<td>' + taskArr[index].data.input + '</td>';
-        taskTable += '<td>' + taskArr[index].data.output + '</td>';
+        taskTable += '<td>' + taskArray[index].id + '</td>';
+        taskTable += '<td>' + taskArray[index].type + '</td>';
+        taskTable += '<td>' + taskArray[index].data.input + '</td>';
+        taskTable += '<td>' + taskArray[index].data.output + '</td>';
         taskTable += '<td>' + sync + '</td>';
         taskTable += '</tr>';
     }
@@ -38,8 +37,8 @@ function getBotTasks() {
         data = task.response;
         if (data !== null) {
             //  console.log(data);
-            if (document.querySelector('#botMode tbody').rows.length < data.length) {
-                bot_data(data);
+            if (document.querySelector('#botMode tbody').rows.length < data.length) {//Ich bin mir ssicher, dass diese Zeile Probleme verursacht
+                actualizeTable(data);
             }
         }
     };
@@ -76,7 +75,7 @@ function bot() {
     });
     let indexOfActualReport = 0;
     console.log('Rep: ' + filteredReports.length);
-    while (run && indexOfActualReport < filteredReports.length) {
+    while (run && indexOfActualReport < filteredReports.length) {//Ich vermute hier einen Fehler, der sich beheben lässt mit: while(run){ someFunctionToWait(); ... }
         console.log('vor Execute');
         executeTask(filteredReports[indexOfActualReport].id);
         console.log('nach Execute');
@@ -85,13 +84,13 @@ function bot() {
     //stopBot();
 }
 
-async function executeTask(id) {
+async function executeTask(taskId) {
     console.log('in Execute');
-    getTask(id);
+    getTask(taskId);
     crypt();
-    sendTask(id);
+    sendTask(taskId);
     getBotTasks();
-    console.log(taskData.data.output);
+    console.log(taskToWorkWith.data.output);
 }
 
 //module.exports = function() {
@@ -101,15 +100,15 @@ async function executeTask(id) {
 
 function crypt() {
     let erg;
-    if (taskData.type === "hash-md5") {
+    if (taskToWorkWith.type === "hash-md5") {
         let hash_md5 = crypto.createHash('md5');
-        hash_md5.update(taskData.data.input);
-        taskData.data.output = hash_md5.digest('hex');
-    } else if (taskData.type === "hash-sha256") {
+        hash_md5.update(taskToWorkWith.data.input);
+        taskToWorkWith.data.output = hash_md5.digest('hex');
+    } else if (taskToWorkWith.type === "hash-sha256") {
         let hash_sha256 = crypto.createHash('sha256');
-        hash_sha256.update(taskData.data.input);
-        taskData.data.output = hash_sha256.digest('hex');
-    } else if (taskData.type === "crack-md5") {
+        hash_sha256.update(taskToWorkWith.data.input);
+        taskToWorkWith.data.output = hash_sha256.digest('hex');
+    } else if (taskToWorkWith.type === "crack-md5") {
         console.log('kein Support für crack-md5')
     } else {
         console.log('Typ Falsch');
@@ -117,44 +116,44 @@ function crypt() {
 }
 
 function getReports() {
-    let rep = new XMLHttpRequest();
+    let reportsAnfrage = new XMLHttpRequest();
     //rep.open('GET', 'http://botnet.artificial.engineering:80/api/Reports');
-    rep.open('GET', 'http://localhost:3000/api/Reports', false);
+    reportsAnfrage.open('GET', 'http://localhost:3000/api/Reports', false);
     //    rep.responseType = 'json';
-    rep.setRequestHeader('Token', 'Team_Mystic_FMF');
-    rep.onload = function() {
+    reportsAnfrage.setRequestHeader('Token', 'Team_Mystic_FMF');
+    reportsAnfrage.onload = function() {
         reports = JSON.parse(rep.response);
     };
-    rep.send(null);
+    reportsAnfrage.send(null);
 }
 
 function getTask(id) {
-    let task = new XMLHttpRequest();
+    let taskAnfrage = new XMLHttpRequest();
     //task.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks/'+id);
-    task.open('GET', 'http://localhost:3000/api/Tasks/' + id, false);
+    taskAnfrage.open('GET', 'http://localhost:3000/api/Tasks/' + id, false);
     //  task.responseType = 'json';
-    task.setRequestHeader('Token', 'Team_Mystic_FMF');
-    task.onload = function() {
-        taskData = JSON.parse(task.response);
-        console.log('in req: ' + taskData.data.input);
+    taskAnfrage.setRequestHeader('Token', 'Team_Mystic_FMF');
+    taskAnfrage.onload = function() {
+        taskToWorkWith = JSON.parse(task.response);
+        console.log('in req: ' + taskToWorkWith.data.input);
     };
-    task.send(null);
+    taskAnfrage.send(null);
 }
 
-function sendTask(id) {
+function sendTask(taskId) {
     let sende = new XMLHttpRequest();
     //sende.open('POST', 'http://botnet.artificial.engineering:80/api/Tasks/'+id, true);
-    sende.open('POST', 'http://localhost:3000/api/Tasks/' + id, true);
+    sende.open('POST', 'http://localhost:3000/api/Tasks/' + taskId, true);
     sende.responseType = 'json';
     sende.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
     sende.setRequestHeader('Token', 'Team_Mystic_FMF');
     let daten = {
         data: {
-            input: taskData.data.input,
-            output: taskData.data.output
+            input: taskToWorkWith.data.input,
+            output: taskToWorkWith.data.output
         },
-        id: id,
-        type: taskData.type
+        id: taskId,
+        type: taskToWorkWith.type
     };
     console.log('in POST ' + JSON.stringify(daten));
     sende.send(JSON.stringify(daten));

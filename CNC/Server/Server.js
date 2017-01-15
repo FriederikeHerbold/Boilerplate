@@ -16,25 +16,25 @@ const serverToken = 'Team_Mystic_FMF';
 
 // getter von Datei
 var getTasks = function() {
-    fs.readFile(__dirname + '/' + 'TaskData.json', 'UTF-8', function(err, wert) {
+    fs.readFile(__dirname + '/' + 'TaskData.json', 'UTF-8', function(err, textInTaskData) {
         if (err) throw err;
-        console.log('tasks von Datei lesen' + wert);
-        tasks = JSON.parse(wert);
+        console.log('tasks von Datei lesen' + textInTaskData);
+        tasks = JSON.parse(textInTaskData);
     });
 };
 
 var getBot = function() {
-    fs.readFile(__dirname + '/' + 'BotData.json', 'UTF-8', function(err, wert) {
+    fs.readFile(__dirname + '/' + 'BotData.json', 'UTF-8', function(err, textInBotData) {
         if (err) throw err;
-        bot = JSON.parse(wert);
+        bot = JSON.parse(textInBotData);
     });
 };
 
 var getReports = function() {
-    fs.readFile(__dirname + '/' + 'ReportData.json', 'UTF-8', function(err, wert) {
+    fs.readFile(__dirname + '/' + 'ReportData.json', 'UTF-8', function(err, textInReportData) {
         if (err) throw err;
-        console.log('Report vom Datei Lesen' + wert);
-        reports = JSON.parse(wert);
+        console.log('Report vom Datei Lesen' + textInReportData);
+        reports = JSON.parse(textInReportData);
     });
 };
 
@@ -61,20 +61,22 @@ var bot = getBot();
 var reports = getReports();
 
 
-
+//Ist dieser Block wirklich nötig?
 app.get('/', function(req, res) {
-    res.send('fehler');
+    res.send('Die Funktion get mit dem Pfad ""/" wird nicht unterstützt');
 });
+
+
 router.get('/', function(req, res) {
-    res.send('fehler');
+    res.send('Die Funktion get mit dem Pfad ""/" wird nicht unterstützt');
 });
 router.get('/Status', function(req, res) {
     getBot();
     res.json(bot);
 });
 router.get('/Status/:id', function(req, res) {
-    let index = bot.map(function(parameter) {
-        return parameter["id"];
+    let index = bot.map(function(oneBotInBotArray) {
+        return oneBotInBotArray["id"];
     }).indexOf(parseInt(req.params.id));
     if (index !== -1) {
         res.json(bot[index]);
@@ -83,26 +85,26 @@ router.get('/Status/:id', function(req, res) {
     }
 });
 router.post('/Status', function(req, res) {
-    let wl;
-    let index = bot.map(function(d) {
-        return d["id"];
+    let workload;
+    let index = bot.map(function(oneBotInBotArray) {
+        return oneBotInBotArray["id"];
     }).indexOf(req.body.id);
     if (index !== -1) {
         if (req.body.status) {
-            wl = 0.1;
+            workload = 0.1;
         } else {
-            wl = 0.0;
+            workload = 0.0;
         }
-        bot[index].workload = wl;
+        bot[index].workload = workload;
     } else {
-        console.log('fehler');
+        console.log('Der Bot mit der ID ' + req.body.id + 'wurde nicht gefunden');
     }
     saveBot();
     res.send('OK');
 });
 router.post('/Status/:id', function(req, res) {
-    let index = tasks.map(function(d) {
-        return d["id"];
+    let index = tasks.map(function(oneTaskInTasks) {
+        return oneTaskInTasks["id"];
     }).indexOf(parseInt('OK'));
 
     if (index !== -1) {
@@ -124,8 +126,8 @@ router.get('/Tasks', function(req, res) {
 
 router.get('/Tasks/:id', function(req, res) {
     getTasks();
-    let index = tasks.map(function(d) {
-        return d["id"];
+    let index = tasks.map(function(oneTaskInTasks) {
+        return oneTaskInTasks["id"];
     }).indexOf(parseInt(req.params.id));
 
     if (index !== -1) {
@@ -141,8 +143,8 @@ router.get('/Reports', (req, res) => {
 });
 
 router.post('/Reports/:id', (req, res) => {
-    let index = reports.map(function(d) {
-        return d["id"];
+    let index = reports.map(function(oneReportInReports) {
+        return oneReportInReports["id"];
     });
 
     if (index.indexOf(req.params.id)) {
@@ -158,19 +160,19 @@ router.post('/Reports/:id', (req, res) => {
 router.post('/Tasks', function(req, res) {
     if (checkToken(req.get("token"))) {
         let neu = {
-            id: makeID(),
+            id: makeNewTaskID(),
             type: req.body.type,
             data: {
                 input: req.body.data.input,
                 output: null
             }
         };
-        let report = {
+        let reportOfNeu = {
             id: neu.id,
             sync: 'OK'
         };
         tasks.push(neu);
-        reports.push(report);
+        reports.push(reportOfNeu);
         saveTasks();
         saveReports();
         res.send(reports.sync);
@@ -185,8 +187,8 @@ router.post('/Tasks/:id', function(req, res) {
         getTasks();
         getReports();
 
-        let index = tasks.map(function(d) {
-            return d["id"];
+        let index = tasks.map(function(oneTaskInTasks) {
+            return oneTaskInTasks["id"];
         }).indexOf(parseInt(req.params.id));
         if (index !== -1) {
             tasks[index].type = req.body.type;
@@ -197,9 +199,9 @@ router.post('/Tasks/:id', function(req, res) {
             console.log('Output: ' + tasks[index].data.output);
             console.log('reports in GET:' + reports);
             if (tasks[index].data.output !== null) {
-                reports[index].sync = 'OK';
-            } else {
                 reports[index].sync = 'NOT OK';
+            } else {
+                reports[index].sync = 'OK';
             }
             saveReports();
         } else {
@@ -215,7 +217,7 @@ const checkToken = function(token) {
     return serverToken === token;
 };
 
-function makeID() {
+function makeNewTaskID() {
     let erg;
     if (tasks.length === 0) {
         erg = 1;

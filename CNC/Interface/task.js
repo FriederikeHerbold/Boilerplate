@@ -1,13 +1,12 @@
-var task_data = function(data) {
+var updateTaskTable = function(taskArray) {
     var table = document.querySelector('#tasks tbody');
-    var taskArr = data;
     var taskTable = '';
-    for (var index = 0; index < data.length; index += 1) {
+    for (var index = 0; index < taskArray.length; index += 1) {
         taskTable += '<tr>';
-        taskTable += '<td>' + taskArr[index].id + '</td>';
-        taskTable += '<td>' + taskArr[index].type + '</td>';
-        taskTable += '<td>' + taskArr[index].data.input + '</td>';
-        taskTable += '<td>' + taskArr[index].data.output + '</td>';
+        taskTable += '<td>' + taskArray[index].id + '</td>';
+        taskTable += '<td>' + taskArray[index].type + '</td>';
+        taskTable += '<td>' + taskArray[index].data.input + '</td>';
+        taskTable += '<td>' + taskArray[index].data.output + '</td>';
         taskTable += '</tr>';
     }
     table.innerHTML = taskTable;
@@ -21,10 +20,10 @@ function getTasks() {
     task.responseType = 'json';
     task.setRequestHeader('Token', 'Team_Mystic_FMF');
     task.onload = function() {
-        var data = task.response;
-        if (data !== null) {
-            //if (document.querySelector('#tasks tbody').rows.length < data.length) {
-            task_data(data);
+        var newTaskArray = task.response;
+        if (newTaskArray !== null) {
+            //if (document.querySelector('#tasks tbody').rows.length < newTaskArray.length) {
+            updateTaskTable(newTaskArray);
             //}
         }
     };
