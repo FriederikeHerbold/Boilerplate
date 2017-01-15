@@ -66,6 +66,11 @@ li {
     width: 100%;
 }
 
+#botMode {
+    overflow: auto;
+    width: 100%;
+}
+
 #eingabe {
     position: fixed;
     max-width: 450px;
@@ -180,10 +185,11 @@ input:checked+.slider:before {
 }
 
 .button4 {
-    position: relative;
-    left: 15%;
-    background-color: #FA58D0;
-    min-width: 45px;
+    position: fixed;
+    z-index: 1;
+    margin-left: 100px;
+    background-color: #9A2EFE;
+    min-width: 150px;
     width: 20%;
     color: white;
     font-size: 100%;
@@ -199,6 +205,10 @@ input:checked+.slider:before {
 
 .button3:hover {
     background-color: #F781D8;
+}
+
+.button4:hover {
+    background-color: #BE81F7;
 }
 
 #inputText, #select {

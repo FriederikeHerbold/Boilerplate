@@ -1,58 +1,57 @@
 var getStatusTBody = function(statusArray) {
-    var code = statusArray.map((val) => {
-        var button;
-        console.log(val.id);
-        console.log(val.workload);
-        if (val.workload === 0) {
-            button = '<label class="switch">' +
+	var code = statusArray.map((val) => {
+		var button;
+		if (val.workload === 0) {
+			button = '<label class="switch">' +
                 '<input type="checkbox" onchange= "POSTstat(' + val.id + ', ' + val.workload + ')" >' +
                 '<div class="slider round"></div>' +
-                '</label>'
-        } else {
-            button = '<label class="switch">' +
+                '</label>';
+		} else {
+			button = '<label class="switch">' +
                 '<input type="checkbox" onchange= "POSTstat(' + val.id + ', ' + val.workload + ')" checked>' +
                 '<div class="slider round"></div>' +
-                '</label>'
-        }
-        return '<tr><td>' + Object.values(val).join('</td><td>') + '</td><td>' + button + '</td></tr>';
-    }).join('\n');
-    return code;
+                '</label>';
+		}
+		return '<tr><td>' + Object.values(val).join('</td><td>') + '</td><td>' + button + '</td></tr>';
+	}).join('\n');
+	return code;
 };
 
 function getStatus() {
-    var statusAnfrage = new XMLHttpRequest();
+	console.log('GET in Status');
+	var statusAnfrage = new XMLHttpRequest();
     //stat.open('GET', 'http://botnet.artificial.engineering:80/api/Status');
-    statusAnfrage.open('GET', 'http://localhost:3000/api/Status');
-    statusAnfrage.responseType = 'json';
-    statusAnfrage.setRequestHeader('Token', 'Team_Mystic_FMF');
-    statusAnfrage.onload = function() {
-        var statusArray = statusAnfrage.response;
-        if (statusArray !== null) {
-            var element = document.querySelector('#status tbody');
-            element.innerHTML = getStatusTBody(statusArray);
-        }
-    };
-    statusAnfrage.send(null);
+	statusAnfrage.open('GET', 'http://localhost:3000/api/Status');
+	statusAnfrage.responseType = 'json';
+	statusAnfrage.setRequestHeader('Token', 'Team_Mystic_FMF');
+	statusAnfrage.onload = function() {
+		var statusArray = statusAnfrage.response;
+		if (statusArray !== null) {
+			var element = document.querySelector('#status tbody');
+			element.innerHTML = getStatusTBody(statusArray);
+		}
+	};
+	statusAnfrage.send(null);
 }
 getStatus();
 setInterval(getStatus, 20000);
 
 function POSTstat(statusId, workload) {
-    var statPOST = new XMLHttpRequest();
+	var statPOST = new XMLHttpRequest();
     //statPOST.open('POST', 'http://botnet.artificial.engineering:80/api/Status', true);
-    statPOST.open('POST', 'http://localhost:3000/api/Status', true);
-    statPOST.responseType = 'json';
-    statPOST.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
-    statPOST.setRequestHeader('Token', 'Team_Mystic_FMF');
-    let postedStatus = {
-        id: statusId,
+	statPOST.open('POST', 'http://localhost:3000/api/Status', true);
+	statPOST.responseType = 'json';
+	statPOST.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+	statPOST.setRequestHeader('Token', 'Team_Mystic_FMF');
+	let postedStatus = {
+		id: statusId,
 
-        status: null
-    };
-    if (workload === 0) {
-        postedStatus.status = true;
-    } else {
-        postedStatus.status = false;
-    }
-    statPOST.send(JSON.stringify(postedStatus));
+		status: null
+	};
+	if (workload === 0) {
+		postedStatus.status = true;
+	} else {
+		postedStatus.status = false;
+	}
+	statPOST.send(JSON.stringify(postedStatus));
 }
