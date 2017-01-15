@@ -4,7 +4,7 @@ function createHtmlTableRow(taskToPrint) {
 	tableRow += '<td>' + taskToPrint.id + '</td>';
 	tableRow += '<td>' + taskToPrint.type + '</td>';
 	tableRow += '<td>' + taskToPrint.data.input + '</td>';
-	tableRow += '<td>' + taskToPrint.data.output + '</td>';
+	tableRow += '<td>' + taskToPrint.data.output +'huhu'+ '</td>';
 	tableRow += '</tr>';
 	return tableRow;
 }
@@ -19,7 +19,6 @@ var updateTaskTable = function(taskArray) {
 };
 
 function getTasks() {
-	console.log('GET tasks in Task');
 	var task = new XMLHttpRequest();
     //task.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks');
 	task.open('GET', 'http://localhost:3000/api/Tasks');

@@ -18,7 +18,6 @@ var getStatusTBody = function(statusArray) {
 };
 
 function getStatus() {
-	console.log('GET in Status');
 	var statusAnfrage = new XMLHttpRequest();
     //stat.open('GET', 'http://botnet.artificial.engineering:80/api/Status');
 	statusAnfrage.open('GET', 'http://localhost:3000/api/Status');
