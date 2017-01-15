@@ -1,5 +1,5 @@
-var status_data = function(data) {
-    var code = data.map((val, index) => {
+var getStatusTBody = function(statusArray) {
+    var code = statusArray.map((val) => {
         var button;
         console.log(val.id);
         console.log(val.workload);
@@ -20,39 +20,39 @@ var status_data = function(data) {
 };
 
 function getStatus() {
-    var stat = new XMLHttpRequest();
+    var statusAnfrage = new XMLHttpRequest();
     //stat.open('GET', 'http://botnet.artificial.engineering:80/api/Status');
-    stat.open('GET', 'http://localhost:3000/api/Status');
-    stat.responseType = 'json';
-    stat.setRequestHeader('Token', 'meins-1337');
-    stat.onload = function() {
-        var data = stat.response;
-        if (data !== null) {
-            console.log(data);
+    statusAnfrage.open('GET', 'http://localhost:3000/api/Status');
+    statusAnfrage.responseType = 'json';
+    statusAnfrage.setRequestHeader('Token', 'Team_Mystic_FMF');
+    statusAnfrage.onload = function() {
+        var statusArray = statusAnfrage.response;
+        if (statusArray !== null) {
             var element = document.querySelector('#status tbody');
-            element.innerHTML = status_data(data);
+            element.innerHTML = getStatusTBody(statusArray);
         }
     };
-    stat.send(null);
+    statusAnfrage.send(null);
 }
 getStatus();
 setInterval(getStatus, 20000);
 
-function POSTstat(ids, workload) {
+function POSTstat(statusId, workload) {
     var statPOST = new XMLHttpRequest();
     //statPOST.open('POST', 'http://botnet.artificial.engineering:80/api/Status', true);
     statPOST.open('POST', 'http://localhost:3000/api/Status', true);
     statPOST.responseType = 'json';
     statPOST.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
-    statPOST.setRequestHeader('Token', 'meins-1337');
-    let datenS = {
-        id: ids,
+    statPOST.setRequestHeader('Token', 'Team_Mystic_FMF');
+    let postedStatus = {
+        id: statusId,
+
         status: null
     };
     if (workload === 0) {
-        datenS.status = true;
+        postedStatus.status = true;
     } else {
-        datenS.status = false;
+        postedStatus.status = false;
     }
-    statPOST.send(JSON.stringify(datenS));
+    statPOST.send(JSON.stringify(postedStatus));
 }

@@ -179,6 +179,16 @@ input:checked+.slider:before {
     font-size: 100%;
 }
 
+.button4 {
+    position: relative;
+    left: 15%;
+    background-color: #FA58D0;
+    min-width: 45px;
+    width: 20%;
+    color: white;
+    font-size: 100%;
+}
+
 .button:hover {
     background-color: #DA81F5;
 }
