@@ -1,6 +1,8 @@
 var getStatusTBody = function(statusArray) {
     var code = statusArray.map((val) => {
         var button;
+        console.log(val.id);
+        console.log(val.workload);
         if (val.workload === 0) {
             button = '<label class="switch">' +
                 '<input type="checkbox" onchange= "POSTstat(' + val.id + ', ' + val.workload + ')" >' +
@@ -44,6 +46,7 @@ function POSTstat(statusId, workload) {
     statPOST.setRequestHeader('Token', 'Team_Mystic_FMF');
     let postedStatus = {
         id: statusId,
+
         status: null
     };
     if (workload === 0) {

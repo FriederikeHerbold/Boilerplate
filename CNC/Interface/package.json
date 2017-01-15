@@ -2,4 +2,5 @@
     "main":            "./index.html",
     "name":            "Test",
     "nodejs": true
+
 }
