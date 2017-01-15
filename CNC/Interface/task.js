@@ -1,10 +1,10 @@
-function createHtmlTableRow(taskToPrint) {
+function createHtmlTaskTableRow(taskToPrint) {
 	let tableRow = '';
 	tableRow += '<tr>';
 	tableRow += '<td>' + taskToPrint.id + '</td>';
 	tableRow += '<td>' + taskToPrint.type + '</td>';
 	tableRow += '<td>' + taskToPrint.data.input + '</td>';
-	tableRow += '<td>' + taskToPrint.data.output +'huhu'+ '</td>';
+	tableRow += '<td>' + taskToPrint.data.output + '</td>';
 	tableRow += '</tr>';
 	return tableRow;
 }
@@ -13,7 +13,7 @@ var updateTaskTable = function(taskArray) {
 	var table = document.querySelector('#tasks tbody');
 	var taskTable = '';
 	for (var index = 0; index < taskArray.length; index += 1) {
-		taskTable += createHtmlTableRow(taskArray[index]);
+		taskTable += createHtmlTaskTableRow(taskArray[index]);
 	}
 	table.innerHTML = taskTable;
 };
