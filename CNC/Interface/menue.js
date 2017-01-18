@@ -1,11 +1,11 @@
-var seitenWechsel = function(id) {
+let seitenWechsel = function(id) {
 
-	var element = document.querySelector('#' + id);
+	let element = document.querySelector('#' + id);
 	if (element !== null) {
 		element.className = 'active';
 	}
-	var others = [].slice.call(document.querySelectorAll('section'));
-	for (var index = 0; index < others.length; index += 1) {
+	let others = [].slice.call(document.querySelectorAll('section'));
+	for (let index = 0; index < others.length; index += 1) {
 		if (others[index] !== element) {
 			others[index].className = '';
 		}

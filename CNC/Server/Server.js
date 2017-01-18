@@ -6,7 +6,7 @@ const cors = require('cors');
 const fs = require('fs');
 
 app.use(cors());
-app.use(parser.urlencoded({extended: true}));
+app.use(parser.urlencoded({ extended: true }));
 app.use(parser.json());
 app.use('/api', router);
 
@@ -112,9 +112,9 @@ router.post('/Status/:id', (req, res) => {
 	let index = tasks.map((oneTaskInTasks) => oneTaskInTasks.id).indexOf(parseInt('OK'));
 
 	if (index !== -1) {
-		res.json({message: 'OK'});
+		res.json({ message: 'OK' });
 	} else {
-		res.json({message: 'NOT OK'});
+		res.json({ message: 'NOT OK' });
 	}
 });
 

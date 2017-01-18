@@ -5,7 +5,7 @@ let taskToWorkWith = null;
 let run = false;
 let botSetIntervalId = null;
 
-function createHtmlTableRow(taskToPrint, sync) {
+let createHtmlTableRow = function(taskToPrint, sync) {
 	let tableRow = '';
 	tableRow += '<tr>';
 	tableRow += '<td>' + taskToPrint.id + '</td>';
@@ -15,13 +15,13 @@ function createHtmlTableRow(taskToPrint, sync) {
 	tableRow += '<td>' + sync + '</td>';
 	tableRow += '</tr>';
 	return tableRow;
-}
+};
 
 const actualizeTable = function(taskArray) {
-	var table = document.querySelector('#botMode tbody');
-	var taskTable = '';
+	let table = document.querySelector('#botMode tbody');
+	let taskTable = '';
 	let sync = '';
-	for (var index = 0; index < taskArray.length; index += 1) {
+	for (let index = 0; index < taskArray.length; index += 1) {
 		if (taskArray[index].data.output === null) {
 			sync = 'OK';
 		} else {
@@ -32,7 +32,7 @@ const actualizeTable = function(taskArray) {
 	table.innerHTML = taskTable;
 };
 
-function getBotTasks() {
+let getBotTasks = function() {
 	let task = new XMLHttpRequest();
     //task.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks');
 	task.open('GET', 'http://localhost:3000/api/Tasks');
@@ -45,9 +45,9 @@ function getBotTasks() {
 		}
 	};
 	task.send(null);
-}
+};
 
-function crypt() {
+let crypt = function() {
 	if (taskToWorkWith.type === 'hash-md5') {
 		let hash_md5 = crypto.createHash('md5');
 		hash_md5.update(taskToWorkWith.data.input);
@@ -61,9 +61,9 @@ function crypt() {
 	} else {
 		console.log('Typ Falsch');
 	}
-}
+};
 
-function getReports() {
+let getReports = function() {
 	let reportsAnfrage = new XMLHttpRequest();
     //rep.open('GET', 'http://botnet.artificial.engineering:80/api/Reports');
 	reportsAnfrage.open('GET', 'http://localhost:3000/api/Reports', false);
@@ -72,9 +72,9 @@ function getReports() {
 		reports = JSON.parse(reportsAnfrage.response);
 	};
 	reportsAnfrage.send(null);
-}
+};
 
-function getTask(id) {
+let getTask = function(id) {
 	let taskAnfrage = new XMLHttpRequest();
     //task.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks/'+id);
 	taskAnfrage.open('GET', 'http://localhost:3000/api/Tasks/' + id, false);
@@ -83,9 +83,9 @@ function getTask(id) {
 		taskToWorkWith = JSON.parse(taskAnfrage.response);
 	};
 	taskAnfrage.send(null);
-}
+};
 
-function sendReport(taskId) {
+let sendReport = function(taskId) {
 	let sende = new XMLHttpRequest();
     //sende.open('POST', 'http://botnet.artificial.engineering:80/api/Reports/'+id, true);
 	sende.open('POST', 'http://localhost:3000/api/Reports/' + taskId, true);
@@ -101,16 +101,16 @@ function sendReport(taskId) {
 		type: taskToWorkWith.type
 	};
 	sende.send(JSON.stringify(daten));
-}
+};
 
-function executeTask(taskId) {
+let executeTask = function(taskId) {
 	getTask(taskId);
 	crypt();
 	sendReport(taskId);
 	getBotTasks();
-}
+};
 
-function bot() {
+let bot = function() {
 	getReports();
 	let filteredReports = reports.filter((parameter) => parameter.sync === 'OK');
 
@@ -118,20 +118,20 @@ function bot() {
 		executeTask(filteredReports[0].id);
 
 	}
-}
+};
 
-function startBot() {
+let startBot = function() {
 	run = true;
 	getBotTasks();
 	botSetIntervalId = setInterval(bot, 1000);
-}
+};
 
-function stopBot() {
+let stopBot = function() {
 	run = false;
 	clearInterval(botSetIntervalId);
-}
+};
 
-var toggleBotMode = function() {
+let toggleBotMode = function() {
 
 	let botModeButton = document.getElementById('starttoggle');
 	if (run) {

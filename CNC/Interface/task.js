@@ -1,4 +1,4 @@
-function createHtmlTaskTableRow(taskToPrint) {
+let createHtmlTaskTableRow = function(taskToPrint) {
 	let tableRow = '';
 	tableRow += '<tr>';
 	tableRow += '<td>' + taskToPrint.id + '</td>';
@@ -7,39 +7,39 @@ function createHtmlTaskTableRow(taskToPrint) {
 	tableRow += '<td>' + taskToPrint.data.output + '</td>';
 	tableRow += '</tr>';
 	return tableRow;
-}
+};
 
-var updateTaskTable = function(taskArray) {
-	var table = document.querySelector('#tasks tbody');
-	var taskTable = '';
-	for (var index = 0; index < taskArray.length; index += 1) {
+let updateTaskTable = function(taskArray) {
+	let table = document.querySelector('#tasks tbody');
+	let taskTable = '';
+	for (let index = 0; index < taskArray.length; index += 1) {
 		taskTable += createHtmlTaskTableRow(taskArray[index]);
 	}
 	table.innerHTML = taskTable;
 };
 
-function getTasks() {
-	var task = new XMLHttpRequest();
+let getTasks = function() {
+	let task = new XMLHttpRequest();
     //task.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks');
 	task.open('GET', 'http://localhost:3000/api/Tasks');
 	task.responseType = 'json';
 	task.setRequestHeader('Token', 'Team_Mystic_FMF');
 	task.onload = function() {
-		var newTaskArray = task.response;
+		let newTaskArray = task.response;
 		if (newTaskArray !== null) {
 			updateTaskTable(newTaskArray);
 		}
 	};
 	task.send(null);
-}
+};
 
 getTasks();
 setInterval(getTasks, 20000);
 
-function doSend() {
-	var sende = new XMLHttpRequest();
+let doSend = function() {
+	let sende = new XMLHttpRequest();
 	let daten = {
-		data: {input: inputText.value},
+		data: { input: inputText.value },
 		type: select.value
 	};
     //sende.open('POST', 'http://botnet.artificial.engineering:80/api/Tasks', true);
@@ -49,4 +49,4 @@ function doSend() {
 	sende.setRequestHeader('Token', 'Team_Mystic_FMF');
 	sende.send(JSON.stringify(daten));
 	setTimeout(getTasks, 1000);
-}
+};
